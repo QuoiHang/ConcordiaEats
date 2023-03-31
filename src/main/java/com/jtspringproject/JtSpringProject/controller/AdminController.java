@@ -10,8 +10,9 @@ import com.mysql.cj.protocol.Resultset;
 
 @Controller
 public class AdminController {
-	
-	int adminlogcheck = 0;
+
+	int userlogcheck = 1;	// to check user
+	int adminlogcheck = 0;	// to check admin
 	String usernameforclass = "";
 	
 	@RequestMapping(value = {"/", "/logout"})		// REQUEST: /, /logout

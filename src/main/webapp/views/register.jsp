@@ -42,7 +42,7 @@
                 <label for="Address">Address</label>
                 <textarea class="form-control form-control-lg" rows="3" placeholder="Enter Your Address" name="address"></textarea>
             </div>
-<span style="margin-top: 10px">Already have an account <a class="linkControl" href="index">Login here</a></span> <br><br>
+            <span style="margin-top: 10px">Already have an account <a class="linkControl" href="index">Login here</a></span> <br><br>
             <input type="submit" value="Register" class="btn btn-primary btn-block"><br>
             
         </form>
@@ -51,12 +51,12 @@
 
 <script>
     function showPassword() {
-  var x = document.getElementById("password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
 }
 </script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

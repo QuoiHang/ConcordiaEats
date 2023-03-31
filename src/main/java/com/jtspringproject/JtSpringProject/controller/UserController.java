@@ -13,28 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController{
 
+	// direct to '/register'
 	@GetMapping("/register")
 	public String registerUser(){
 		return "register";
 	}
-	
-	@GetMapping("/contact")
-	public String contact(){
-		return "contact";
-	}
-	
-	@GetMapping("/buy")
-	public String buy(){
-		return "buy";
-	}
-	
-	@GetMapping("/user/products")
-	public String getproduct(Model model) {
-		return "uproduct";
-	}
-	
+
 	//POST Registration
-	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
+	@PostMapping(value = "newuserregister")
 	public String newUseRegister(
 			@RequestParam("username") String username,
 			@RequestParam("password") String password, 
@@ -45,7 +31,6 @@ public class UserController{
 			pst.setString(1, username);
 			pst.setString(2, password);
 			pst.setString(3, email);
-			
 
 			//pst.setString(4, address);
 			int i = pst.executeUpdate();
@@ -55,6 +40,25 @@ public class UserController{
 		catch(Exception e){
 			System.out.println("Exception:"+e);
 		}
+
 		return "redirect:/";
+	}
+
+	// direct to '/user/products' -> user product -> uproduct
+	@GetMapping("/user/products")
+	public String getproduct(Model model) {
+		return "uproduct";
+	}
+
+	// direct to '/buy'
+	@GetMapping("/buy")
+	public String buy(){
+		return "buy";
+	}
+
+	// direct to 'contact'
+	@GetMapping("/contact")
+	public String contact(){
+		return "contact";
 	}
 }
