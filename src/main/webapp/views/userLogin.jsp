@@ -28,12 +28,11 @@
 </head>
 
 <body>
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-md-5 mx-auto">
-                <img class="mx-auto" src="../static/ConcordiaEats-Logo.svg" th:src="@{ConcordiaEats-Logo.svg}">
+    <div class="container my-5">
+            <div class="col-md-6 mx-auto">
+                <img class="mx-auto d-block" src="/images/ConcordiaEats-Logo.svg" height="180">
 
-                <h2 style="color:#912338; text-align:center;">ConcordiaEats User Login</h2>
+                <h2 style="color:#912338; text-align:center;">ConcordiaEats <br> User Login</h2>
 
                 <form action="userloginvalidate" method="post">
 
@@ -57,7 +56,6 @@
                     <h3 style="color:red;">${ message }</h3>
                 <br>
             </div>
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

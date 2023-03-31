@@ -26,10 +26,12 @@
         </style>
     <title>Document</title>
 </head>
-<body>
 
-    <div class="container my-5" style="width: 1800px;" ><br>
-            <div class="jumbotron border col-sm-5 mx-auto">
+<body>
+    <div class="container my-5">
+            <div class="jumbotron border col-lg-6 col-md-8 mx-auto">
+                <img class="mx-auto d-block" src="/images/ConcordiaEats-Logo.svg" height="180">
+
                 <h2 class="text-center" style="color:#912338; text-align:center;">ConcordiaEats <br> Admin Login</h2>
 
                 <br>
@@ -47,11 +49,8 @@
 
                     <input type="submit" value="Login" class="btn btn-primary btn-block">
 
-                    <br>
-
                     <h3 style="color:red;">${ message }</h3>
 
-                    <br>
             </div>
     </div>
 
