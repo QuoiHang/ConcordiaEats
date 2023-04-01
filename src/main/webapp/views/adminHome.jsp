@@ -37,7 +37,7 @@
 		</div>
 	</nav>
 	<div class="jumbotron text-center">
-		<h1 class="display-4">Welcome Back, Admin</h1>
+		<h1 class="display-4">Welcome Back:P, Admin</h1>
 		<hr>
 		<p>Manage your data from this Admin Panel</p>
 	</div><br>
@@ -45,6 +45,7 @@
 		<div class="row justify-content-center">
 			<div class="col-sm-3 pt-4">
 				<div class="card border border-info" style="background-color: white;">
+
 					<div class="card-body text-center">
 						<h4 class="card-title">Categories</h4>
 						<p>---------------------------------------------</p>
@@ -73,6 +74,28 @@
 						<p class="card-text">Manage all the customer here.</p>
 						<a href="/admin/customers" class="card-link btn btn-primary">Manage</a>
 
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3 pt-4">
+				<div class="card" style="background-color: white;">
+					<div class="card-body text-center">
+						<h4 class="card-title">Best Deal</h4>
+						<p>---------------------------------------------</p>
+						<p class="card-text">View the best deal products here(just testing for best deal method on the
+							adminside! i will delete after).</p>
+						<a href="/admin/bestdeal" class="card-link btn btn-primary">View</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-3 pt-4">
+				<div class="card" style="background-color: white;">
+					<div class="card-body text-center">
+						<h4 class="card-title">mostSelling & leastSelling</h4>
+						<p>---------------------------------------------</p>
+						<p class="card-text">View the most selling and least selling items here.</p>
+						<a href="/admin/products" class="card-link btn btn-primary">View</a>
 					</div>
 				</div>
 			</div>

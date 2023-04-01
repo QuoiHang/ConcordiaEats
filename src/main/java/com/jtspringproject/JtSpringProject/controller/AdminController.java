@@ -1,21 +1,25 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import com.mysql.cj.protocol.Resultset;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
-
-	int userlogcheck = 1; // to check user
-	int adminlogcheck = 0; // to check admin
+	int adminlogcheck = 0;
 	String usernameforclass = "";
 
-	@RequestMapping(value = { "/", "/logout" }) // REQUEST: /, /logout
+	@RequestMapping(value = { "/", "/logout" })
 	public String returnIndex() {
 		adminlogcheck = 0;
 		usernameforclass = "";
@@ -30,19 +34,21 @@ public class AdminController {
 			model.addAttribute("username", usernameforclass);
 			return "index";
 		}
+
 	}
 
 	@GetMapping("/userloginvalidate")
 	public String userlog(Model model) {
+
 		return "userLogin";
 	}
 
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST) // REQUEST: userloginvalidate ^ (POST)
-	public String userlogin(@RequestParam("username") String username,
-			@RequestParam("password") String pass,
+	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
+	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
+
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 			ResultSet rst = stmt.executeQuery(
@@ -54,14 +60,17 @@ public class AdminController {
 				model.addAttribute("message", "Invalid Username or Password");
 				return "userLogin";
 			}
+
 		} catch (Exception e) {
 			System.out.println("Exception:" + e);
 		}
 		return "userLogin";
+
 	}
 
 	@GetMapping("/admin")
 	public String adminlogin(Model model) {
+
 		return "adminlogin";
 	}
 
@@ -75,6 +84,7 @@ public class AdminController {
 
 	@GetMapping("/loginvalidate")
 	public String adminlog(Model model) {
+
 		return "adminlogin";
 	}
 
@@ -99,7 +109,7 @@ public class AdminController {
 	@RequestMapping(value = "admin/sendcategory", method = RequestMethod.GET)
 	public String addcategorytodb(@RequestParam("categoryname") String catname) {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 
@@ -116,7 +126,7 @@ public class AdminController {
 	@GetMapping("/admin/categories/delete")
 	public String removeCategoryDb(@RequestParam("id") int id) {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 
@@ -134,7 +144,7 @@ public class AdminController {
 	public String updateCategoryDb(@RequestParam("categoryid") int id,
 			@RequestParam("categoryname") String categoryname) {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 
@@ -164,7 +174,7 @@ public class AdminController {
 		String pname, pdescription, pimage;
 		int pid, pprice, pweight, pquantity, pcategory;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 			Statement stmt2 = con.createStatement();
@@ -205,7 +215,7 @@ public class AdminController {
 
 	{
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 
 			PreparedStatement pst = con.prepareStatement(
@@ -227,7 +237,7 @@ public class AdminController {
 	@GetMapping("/admin/products/delete")
 	public String removeProductDb(@RequestParam("id") int id) {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 
 			PreparedStatement pst = con.prepareStatement("delete from products where id = ? ;");
@@ -284,7 +294,7 @@ public class AdminController {
 	public String profileDisplay(Model model) {
 		String displayusername, displaypassword, displayemail, displayaddress;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			Statement stmt = con.createStatement();
 			ResultSet rst = stmt.executeQuery("select * from users where username = '" + usernameforclass + "';");
@@ -315,7 +325,7 @@ public class AdminController {
 
 	{
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 
 			PreparedStatement pst = con
@@ -331,6 +341,41 @@ public class AdminController {
 			System.out.println("Exception:" + e);
 		}
 		return "redirect:/index";
+	}
+
+	@GetMapping("/admin/bestdeal")
+	public String getBestDeal(Model model) {
+		try {
+			Product bestDealProduct = getBestSellingProduct();
+			model.addAttribute("bestDealProduct", bestDealProduct);
+			return "bestdeal";
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			return "error";
+		}
+	}
+
+	private Product getBestSellingProduct() throws Exception {
+		Product product = null;
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+		Statement stmt = con.createStatement();
+		String query ="select * from products;";// "SELECT p.*, SUM(o.quantity) as total_quantity FROM products p JOIN orders o ON p.id = o.product_id GROUP BY p.id ORDER BY total_quantity DESC LIMIT 1";// 商品テーブルと注文テーブルを結合,最も売れ行きの良い商品を取得するための SQL クエリを定義.このクエリでは、商品テーブルと注文テーブルを結合し、商品 ID ごとに注文数量を合計して、合計数量が最も多い商品を取得
+		ResultSet rs = stmt.executeQuery(query);
+
+		if (rs.next()) {
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String image = rs.getString("image");
+			int categoryId = rs.getInt("categoryid");
+			int quantity = rs.getInt("quantity");
+			int price = rs.getInt("price");
+			int weight = rs.getInt("weight");
+			String description = rs.getString("description");
+			product = new Product(id, name, image, categoryId, quantity, price, weight, description);
+		}
+
+		return product;
 	}
 
 }
