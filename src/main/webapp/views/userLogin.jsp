@@ -33,7 +33,7 @@
 <body>
     <div class="container my-5">
         <div class="col-md-6 mx-auto">
-            <img class="mx-auto d-block" src="/images/ConcordiaEats-Logo.svg" height="180">
+            <img class="mx-auto d-block" th:src="@{/images/ConcordiaEats-Logo.svg}" src="/images/ConcordiaEats-Logo.svg" height="180">
 
             <h2 style="color:#912338; text-align:center;">ConcordiaEats <br> User Login</h2>
 
