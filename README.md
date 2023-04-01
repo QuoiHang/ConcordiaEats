@@ -1,8 +1,8 @@
 # ConcordiaEats
 
-*Updated: 2023-3-31*
+*Updated: 2023-4-1*
 
-*test*
+## branch-1 is available to work on. Feel free to branch from branch-1.
 
 ## Color Theme
 [Official Web Palette](https://www.concordia.ca/web/design/ui-kit-style-guide-accessibility/web-palette-new.html)

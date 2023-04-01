@@ -15,6 +15,7 @@
             background-color: #c8c8c8;
         }
 
+
         .btn {
             background-color: #912338;
             color: #f0f0f0;
@@ -27,6 +28,14 @@
             background-color: #da3a16;
             color: #f0f0f0;
         }
+        
+        .container-fostrap {
+            padding: 1em;
+            display: table-cell;
+            background-image: linear-gradient(315deg, #b1ade2 0%, #7ddff8 74%);
+            text-align: center;
+            vertical-align: middle;
+        }        
     </style>
     <title>ConcordiaEats Home</title>
 </head>
@@ -34,42 +43,48 @@
 <body>
     <section class="wrapper">
         <div class="container-fostrap">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- NAV -->
+            <nav class="navbar navbar-expand-lg sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand">
+                    <a href="#" class="navbar-brand">
                         <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40" class="d-inline-block align-top" />
+                        <h4>Welcome ${ username } </h4>
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <h4>Welcome ${ username } </h4>
                         <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav">
                             <li class="nav-item active">
                                 <a class="nav-link" th:href="@{/}" href="#">Home</a>
                             </li>
                             <!-- TO-DO -->
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{/ucategories}" href="categories">Categories</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{/favorites}" href="favorites">Favorites</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{/cart}" href="cart">Cart</a>
                             </li>
                             <!-- TO-DO/ -->
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="profileDisplay">Profile</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
                             </li>
                         </ul>
                     </div>
+                
                 </div>
             </nav>
+            <!-- NAV -->
+            <!-- CAROUSEL -->
             <div class="bg mt-5">
                 <div class="bg-product mt-5">
                     <div class="container product">
@@ -219,6 +234,7 @@
                     <!--endbg-product-->
                 </div>
             </div>
+            <!-- CAROUSEL -->
             <style>
                 :root {
                     --cr1: #F36E45;
@@ -231,10 +247,6 @@
                     --fs3: 20px;
                     --fs4: 16px;
                     --fs5: 14px;
-                }
-
-                body {
-                    background: #e5e5e5;
                 }
 
                 /* the same attribute */
@@ -324,384 +336,368 @@
                 /*top: -44px;
                   padding: 100px;
                   padding-top: 40px;*/
-              }
-
-              .item {
-                padding: 20px 20px 40px 20px;
-            }
-
-            .col-sm-6.image .item img.img-fluid {
-                /* Ai mướn thêm cái vào làm phá bố cục css của người ta.. mún trang web đẹp thì phải lựa cái ảnh đẹp đẹp vào rồi set cái độ rộng cho nó vừa là được rồi */
-                /*min-width: 100%;*/
-                width: 315px;
-            }
-
-            .col-sm-6.image h1 {
-                margin-bottom: 20px;
-            }
-
-
-            #sliderproduct .top a {
-                text-decoration: none;
-                text-transform: uppercase;
-                font-size: 18px;
-                padding: 14px 22px;
-                background: #e0794f;
-                box-sizing: border-box !important;
-                text-align: center;
-                margin: 0px 2px;
-                display: block;
-                color: #fff;
-                width: 96px;
-            }
-
-            #sliderproduct .col-sm-4.mr-auto {
-                margin-top: 22px;
-            }
-
-            * {}
-
-            #sliderproduct p.cr1 {
-                font-size: 20px;
-                font-weight: 500;
-                margin-bottom: 30px;
-            }
-
-            #sliderproduct .col-sm-6:last-child {
-                /* Cần nâng cao thêm kiến thức về sử dụng padding */
-                padding-top: 27px;
-                padding-bottom: 27px;
-            }
-
-            #sliderproduct .details p.d-inline-block {
-                color: #e0794f;
-            }
-
-            #sliderproduct .details .fa {
-                color: #e0794f;
-                padding: 0px 3px;
-            }
-
-            #sliderproduct .rating {
-                margin: 23px 0px;
-            }
-
-            #sliderproduct .details .btn {
-                text-transform: uppercase;
-                font-weight: 400;
-                padding: 16px 22px;
-                background: #e0794f;
-                color: #fff;
-                border-radius: 81px;
-                font-size: 14px;
-                display: inline-block;
-            }
-
-            #sliderproduct .details h2 {
-                margin: 25px 0px 30px 0px;
-                font-size: 24px;
-                font-weight: 700;
-            }
-
-            #sliderproduct .details p.cr4 {
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 19px;
-                margin-bottom: 0px;
-            }
-
-            #sliderproduct .carousel-item {
-                transition: 0.4s;
-            }
-
-
-            #sliderproduct a.carousel-control-prev,
-            #sliderproduct a.carousel-control-next {
-                border-radius: 50%;
-                background-color: brown;
-                width: 46px;
-                height: 46px;
-                font-size: 30px;
-                text-align: center;
-                line-height: 40px;
-                opacity: 1;
-                top: 50%;
-                transform: translate(-50%, -60%);
-            }
-
-            .bg {
-                height: 570px;
-                overflow: hidden;
-            }
-
-            #sliderproduct ol.carousel-indicators {
-                display: none;
-            }
-
-            .footer {
-                position: fixed;
-                bottom: 0;
-                padding: 15px;
-                width: 100%;
-                text-align: center;
-                background-color: #292929;
-                color: #fff;
-                font-family: sans-serif;
-                font-size: 14px;
-            }
-
-            .footer img {
-                width: 26px;
-                position: relative;
-                top: 0px;
-                left: -3px;
-            }
-
-            .footer a {
-                color: #fff;
-                font-weight: bold;
-                text-decoration: none;
-
-
-            }
-        </style>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
-                <div class="card">
-                    <a class="img-card">
-                        <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
-                    </a>
-                    <div class="card-content">
-                        <h4 class="card-title">
-                            Best deal's
-                        </h4>
-                        <p class="">
-                            Checkout out our products
-                            <br>
-                        </p>
-                    </div>
-                    <div class="card-read-more">
-                        <a href="/user/products" class="btn btn-link btn-block">
-                            GO
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
-                <div class="card">
-                    <a class="img-card">
-                        <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
-                    </a>
-                    <div class="card-content">
-                        <h4 class="card-title">
-                            Contact us
-                        </h4>
-                        <p class="">
-                            find us.
-                            <br>
-                        </p>
-                    </div>
-                    <div class="card-read-more">
-                        <a href="/contact" class="btn btn-link btn-block">
-                            Contact
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap');
-
-                * {
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                    font-family: 'Titillium Web', sans-serif;
                 }
 
-                html,
-                body {
-                    -moz-box-sizing: border-box;
-                    box-sizing: border-box;
-                    height: 100%;
-                    width: 100%;
+                .item {
+                    padding: 20px 20px 40px 20px;
+                }
 
-                    font-family: 'Roboto', sans-serif;
+                .col-sm-6.image .item img.img-fluid {
+                    /* Ai mướn thêm cái vào làm phá bố cục css của người ta.. mún trang web đẹp thì phải lựa cái ảnh đẹp đẹp vào rồi set cái độ rộng cho nó vừa là được rồi */
+                    /*min-width: 100%;*/
+                    width: 315px;
+                }
+
+                .col-sm-6.image h1 {
+                    margin-bottom: 20px;
+                }
+
+                #sliderproduct .top a {
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    font-size: 18px;
+                    padding: 14px 22px;
+                    background: #e0794f;
+                    box-sizing: border-box !important;
+                    text-align: center;
+                    margin: 0px 2px;
+                    display: block;
+                    color: #fff;
+                    width: 96px;
+                }
+
+                #sliderproduct .col-sm-4.mr-auto {
+                    margin-top: 22px;
+                }
+
+                #sliderproduct p.cr1 {
+                    font-size: 20px;
+                    font-weight: 500;
+                    margin-bottom: 30px;
+                }
+
+                #sliderproduct .col-sm-6:last-child {
+                    /* Cần nâng cao thêm kiến thức về sử dụng padding */
+                    padding-top: 27px;
+                    padding-bottom: 27px;
+                }
+
+                #sliderproduct .details p.d-inline-block {
+                    color: #e0794f;
+                }
+
+                #sliderproduct .details .fa {
+                    color: #e0794f;
+                    padding: 0px 3px;
+                }
+
+                #sliderproduct .rating {
+                    margin: 23px 0px;
+                }
+
+                #sliderproduct .details .btn {
+                    text-transform: uppercase;
                     font-weight: 400;
+                    padding: 16px 22px;
+                    background: #e0794f;
+                    color: #fff;
+                    border-radius: 81px;
+                    font-size: 14px;
+                    display: inline-block;
                 }
 
-                ::selection {
-                    color: white;
-                    background: black;
+                #sliderproduct .details h2 {
+                    margin: 25px 0px 30px 0px;
+                    font-size: 24px;
                     font-weight: 700;
                 }
 
-                .wrapper {
-                    display: table;
-                    height: 100%;
-                    width: 100%;
-                }
-
-                .container-fostrap {
-                    display: table-cell;
-                    background-color: #b1ade2;
-                    background-image: linear-gradient(315deg, #b1ade2 0%, #7ddff8 74%);
-                    padding: 1em;
-                    text-align: center;
-                    vertical-align: middle;
-                }
-
-                h1.heading {
-                    color: #fff;
-                    font-size: 1.15em;
-                    font-weight: 900;
-                    margin: 0 0 0.5em;
-                    color: #505050;
-                    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4),
-                    0px 8px 13px rgba(0, 0, 0, 0.1),
-                    0px 18px 23px rgba(0, 0, 0, 0.1);
-                }
-
-                @media (min-width: 450px) {
-                    h1.heading {
-                        font-size: 3.55em;
-                    }
-                }
-
-                @media (min-width: 760px) {
-                    h1.heading {
-                        font-size: 3.05em;
-                    }
-                }
-
-                @media (min-width: 900px) {
-                    h1.heading {
-                        font-size: 3.25em;
-                        margin: 0 0 0.3em;
-                    }
-
-
-                }
-
-                .card {
-                    display: block;
-                    width: auto;
-                    margin: 20px;
-                    line-height: 1.42857143;
-                    background-color: #fff;
-                    border-radius: 2px;
-                    min-width: 15rem;
-                    min-height: 400px;
-                    overflow: hidden;
-                    transition: 0.5s ease;
-                    animation: start_animation 0.5s ease 1;
-                    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-                }
-
-                .cfont {
-                    font-family: 'Arimo', sans-serif;
-                }
-
-                .card:hover {
-                    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-                }
-
-                .img-card {
-                    width: 80%;
-                    height: 225px;
-                    min-width: 14rem;
-                    border-top-left-radius: 2px;
-                    border-top-right-radius: 2px;
-                    display: flex;
-                    overflow: hidden;
-                }
-
-                .img-card img {
-                    margin-top: 15px;
-                    width: fit-content;
-                    height: 200px;
-                    object-fit: cover;
-                    transition: all .25s ease;
-                    filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
-                }
-
-                .card-content {
-                    padding: 15px;
-                    text-align: left;
-
-                }
-
-                .card-content p {
-                    font-family: 'M PLUS Rounded 1c', sans-serif;
-                }
-
-                .card-title {
-                    font-family: 'Signika', sans-serif;
-                    margin-top: 0px;
-                    font-weight: 600;
-                    font-size: 1.65em;
-                }
-
-                .card-title a {
-                    color: #000;
-                    text-decoration: none !important;
-                }
-
-                .card-read-more {
-                    border-top: 1px solid #D4D4D4;
-                }
-
-                .card-read-more a {
-                    text-decoration: none !important;
-                    padding: 10px;
-                    font-weight: 600;
-                    text-transform: uppercase
-                }
-
-                .navbar {
-                    background-color: black;
-                    opacity: 0.9;
-                    z-index: 999;
-                    width: 100%;
-                }
-
-                .navbar::before {
-                    content: "";
-                    position: absolute;
-                    top: 0%;
-                    bottom: 0%;
-                    left: 0;
-                    right: 0;
-                    z-index: -1;
-                }
-
-                .nav-item a {
-                    color: white;
+                #sliderproduct .details p.cr4 {
                     font-weight: 500;
-                    font-size: 17px;
-                    transition: 0.5s ease;
+                    font-size: 16px;
+                    line-height: 19px;
+                    margin-bottom: 0px;
                 }
 
-                .nav-item a:hover {
-                    color: rgb(0, 195, 255);
+                #sliderproduct .carousel-item {
+                    transition: 0.4s;
+                }
+
+
+                #sliderproduct a.carousel-control-prev,
+                #sliderproduct a.carousel-control-next {
+                    border-radius: 50%;
+                    background-color: brown;
+                    width: 46px;
+                    height: 46px;
+                    font-size: 30px;
+                    text-align: center;
+                    line-height: 40px;
+                    opacity: 1;
+                    top: 50%;
+                    transform: translate(-50%, -60%);
+                }
+
+                .bg {
+                    height: 570px;
+                    overflow: hidden;
+                }
+
+                #sliderproduct ol.carousel-indicators {
+                    display: none;
+                }
+
+                .footer {
+                    position: fixed;
+                    bottom: 0;
+                    padding: 15px;
+                    width: 100%;
+                    text-align: center;
+                    background-color: #292929;
+                    color: #fff;
+                    font-family: sans-serif;
+                    font-size: 14px;
+                }
+
+                .footer img {
+                    width: 26px;
+                    position: relative;
+                    top: 0px;
+                    left: -3px;
+                }
+
+                .footer a {
+                    color: #fff;
                     font-weight: bold;
-                    transition: 0.5s ease-in-out;
-
-                }
-
-                .navbar-brand {
-                    color: white;
-                    font-weight: 600;
-                    font-size: 20px;
-                }
-
-                .nav-item {
-                    margin-right: 20px;
+                    text-decoration: none;
                 }
             </style>
+            <!-- BOTTOM -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
+                    <div class="card">
+                        <a class="img-card">
+                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        </a>
+                        <div class="card-content">
+                            <h4 class="card-title">
+                                Best deal's
+                            </h4>
+                            <p class="">
+                                Checkout out our products
+                                <br>
+                            </p>
+                        </div>
+                        <div class="card-read-more">
+                            <a href="/user/products" class="btn btn-link btn-block">
+                                GO
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
+                    <div class="card">
+                        <a class="img-card">
+                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        </a>
+                        <div class="card-content">
+                            <h4 class="card-title">
+                                Contact us
+                            </h4>
+                            <p class="">
+                                find us.
+                                <br>
+                            </p>
+                        </div>
+                        <div class="card-read-more">
+                            <a href="/contact" class="btn btn-link btn-block">
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300&display=swap');
+                    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+                    @import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
+                    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap');
+                    @import url('https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap');
+
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: 'Titillium Web', sans-serif;
+                    }
+
+                    html,
+                    body {
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                        height: 100%;
+                        width: 100%;
+
+                        font-family: 'Roboto', sans-serif;
+                        font-weight: 400;
+                    }
+
+                    ::selection {
+                        color: white;
+                        background: black;
+                        font-weight: 700;
+                    }
+
+                    .wrapper {
+                        display: table;
+                        height: 100%;
+                        width: 100%;
+                    }
+
+                    h1.heading {
+                        color: #fff;
+                        font-size: 1.15em;
+                        font-weight: 900;
+                        margin: 0 0 0.5em;
+                        color: #505050;
+                        text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4),
+                        0px 8px 13px rgba(0, 0, 0, 0.1),
+                        0px 18px 23px rgba(0, 0, 0, 0.1);
+                    }
+
+                    @media (min-width: 450px) {
+                        h1.heading {
+                            font-size: 3.55em;
+                        }
+                    }
+
+                    @media (min-width: 760px) {
+                        h1.heading {
+                            font-size: 3.05em;
+                        }
+                    }
+
+                    @media (min-width: 900px) {
+                        h1.heading {
+                            font-size: 3.25em;
+                            margin: 0 0 0.3em;
+                        }
+                    }
+
+                    .card {
+                        display: block;
+                        width: auto;
+                        margin: 20px;
+                        line-height: 1.42857143;
+                        background-color: #fff;
+                        border-radius: 2px;
+                        min-width: 15rem;
+                        min-height: 400px;
+                        overflow: hidden;
+                        transition: 0.5s ease;
+                        animation: start_animation 0.5s ease 1;
+                        box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+                    }
+
+                    .cfont {
+                        font-family: 'Arimo', sans-serif;
+                    }
+
+                    .card:hover {
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                    }
+
+                    .img-card {
+                        width: 80%;
+                        height: 225px;
+                        min-width: 14rem;
+                        border-top-left-radius: 2px;
+                        border-top-right-radius: 2px;
+                        display: flex;
+                        overflow: hidden;
+                    }
+
+                    .img-card img {
+                        margin-top: 15px;
+                        width: fit-content;
+                        height: 200px;
+                        object-fit: cover;
+                        transition: all .25s ease;
+                        filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+                    }
+
+                    .card-content {
+                        padding: 15px;
+                        text-align: left;
+                    }
+
+                    .card-content p {
+                        font-family: 'M PLUS Rounded 1c', sans-serif;
+                    }
+
+                    .card-title {
+                        font-family: 'Signika', sans-serif;
+                        margin-top: 0px;
+                        font-weight: 600;
+                        font-size: 1.65em;
+                    }
+
+                    .card-title a {
+                        color: #000;
+                        text-decoration: none !important;
+                    }
+
+                    .card-read-more {
+                        border-top: 1px solid #D4D4D4;
+                    }
+
+                    .card-read-more a {
+                        text-decoration: none !important;
+                        padding: 10px;
+                        font-weight: 600;
+                        text-transform: uppercase
+                    }
+
+                    .navbar {
+                        background-color: #912338;
+                        z-index: 999;
+                        width: 100%;
+                    }
+
+                    .navbar::before {
+                        content: "";
+                        position: absolute;
+                        top: 0%;
+                        bottom: 0%;
+                        left: 0;
+                        right: 0;
+                        z-index: -1;
+                    }
+
+                    .nav-item a {
+                        color: white;
+                        font-weight: 500;
+                        font-size: 17px;
+                        transition: 0.5s ease;
+                    }
+
+                    .nav-item a:hover {
+                        color: rgb(0, 195, 255);
+                        font-weight: bold;
+                        transition: 0.5s ease-in-out;
+
+                    }
+
+                    .navbar-brand {
+                        color: white;
+                        font-weight: 600;
+                        font-size: 20px;
+                    }
+
+                    .nav-item {
+                        margin-right: 20px;
+                    }
+                </style>
+            </div>
         </div>
     </section>
 
