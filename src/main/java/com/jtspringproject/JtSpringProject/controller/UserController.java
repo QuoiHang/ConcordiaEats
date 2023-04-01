@@ -11,34 +11,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class UserController{
+public class UserController {
 
 	// direct to '/register'
 	@GetMapping("/register")
-	public String registerUser(){
+	public String registerUser() {
 		return "register";
 	}
 
-	//POST Registration
+	// POST Registration
 	@PostMapping(value = "newuserregister")
 	public String newUseRegister(
 			@RequestParam("username") String username,
-			@RequestParam("password") String password, 
-			@RequestParam("email") String email){
-		try{
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","");
+			@RequestParam("password") String password,
+			@RequestParam("email") String email) {
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 			PreparedStatement pst = con.prepareStatement("insert into users(username,password,email) values(?,?,?);");
 			pst.setString(1, username);
 			pst.setString(2, password);
 			pst.setString(3, email);
 
-			//pst.setString(4, address);
+			// pst.setString(4, address);
 			int i = pst.executeUpdate();
-			System.out.println("data base updated"+i);
-			
-		}
-		catch(Exception e){
-			System.out.println("Exception:"+e);
+			System.out.println("data base updated" + i);
+
+		} catch (Exception e) {
+			System.out.println("Exception:" + e);
 		}
 
 		return "redirect:/";
@@ -52,13 +51,13 @@ public class UserController{
 
 	// direct to '/buy'
 	@GetMapping("/buy")
-	public String buy(){
+	public String buy() {
 		return "buy";
 	}
 
 	// direct to 'contact'
 	@GetMapping("/contact")
-	public String contact(){
+	public String contact() {
 		return "contact";
 	}
 }
