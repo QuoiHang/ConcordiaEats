@@ -1,12 +1,18 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import com.mysql.cj.protocol.Resultset;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
@@ -337,40 +343,39 @@ public class AdminController {
 		}
 		return "redirect:/index";
 	}
-
-	@GetMapping("/admin/bestdeal")
-	public String getBestDeal(Model model) {
-		try {
-			Product bestDealProduct = getBestSellingProduct();
-			model.addAttribute("bestDealProduct", bestDealProduct);
-			return "bestdeal";
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-			return "error";
-		}
+	@GetMapping("/admin/discount")
+	public String getDiscount(Model model) {
+	    try {
+	        Product discountProduct = getDiscountProduct();
+	        model.addAttribute("discountProduct", discountProduct);
+	        return "discount";
+	    } catch (Exception e) {
+	        System.out.println("Exception: " + e);
+	        return "error";
+	    }
 	}
 
-	private Product getBestSellingProduct() throws Exception {
-		Product product = null;
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-		Statement stmt = con.createStatement();
-		String query ="select * from products;";
-		ResultSet rs = stmt.executeQuery(query);
+	private Product getDiscountProduct() throws Exception {
+	    Product product = null;
+	    Class.forName("com.mysql.jdbc.Driver");
+	    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	    Statement stmt = con.createStatement();
+	    String query ="select * from products;";
+	    ResultSet rs = stmt.executeQuery(query);
 
-		if (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			String image = rs.getString("image");
-			int categoryId = rs.getInt("categoryid");
-			int quantity = rs.getInt("quantity");
-			int price = rs.getInt("price");
-			int weight = rs.getInt("weight");
-			String description = rs.getString("description");
-			product = new Product(id, name, image, categoryId, quantity, price, weight, description);
-		}
+	    if (rs.next()) {
+	        int id = rs.getInt("id");
+	        String name = rs.getString("name");
+	        String image = rs.getString("image");
+	        int categoryId = rs.getInt("categoryid");
+	        int quantity = rs.getInt("quantity");
+	        int price = rs.getInt("price");
+	        int weight = rs.getInt("weight");
+	        String description = rs.getString("description");
+	        product = new Product(id, name, image, categoryId, quantity, price, weight, description);
+	    }
 
-		return product;
+	    return product;
 	}
 
 }
