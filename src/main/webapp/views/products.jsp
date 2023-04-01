@@ -79,8 +79,7 @@
 												</td>
 												<td>
 													<% int categoryid=rs.getInt(4); ResultSet
-														rs2=stmt2.executeQuery("select * from categories where
-														categoryid="+categoryid+" ;"); if(rs2.next()) {
+														rs2=stmt2.executeQuery("SELECT * FROM categories WHERE categoryid="+categoryid+" ;"); if(rs2.next()) { // a fixed bug 
 														out.print(rs2.getString(2)); } %>
 
 												</td>
