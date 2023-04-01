@@ -5,17 +5,15 @@ import java.sql.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import com.mysql.cj.protocol.Resultset;
 
 @Controller
 public class AdminController {
-
 	int userlogcheck = 1; // to check user
-	int adminlogcheck = 0; // to check admin
+	int adminlogcheck = 0;
 	String usernameforclass = "";
 
-	@RequestMapping(value = { "/", "/logout" }) // REQUEST: /, /logout
+	@RequestMapping(value = { "/", "/logout" })	// REQUEST: /, /logout
 	public String returnIndex() {
 		adminlogcheck = 0;
 		usernameforclass = "";
@@ -30,17 +28,19 @@ public class AdminController {
 			model.addAttribute("username", usernameforclass);
 			return "index";
 		}
+
 	}
 
 	@GetMapping("/userloginvalidate")
 	public String userlog(Model model) {
+
 		return "userLogin";
 	}
 
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST) // REQUEST: userloginvalidate ^ (POST)
-	public String userlogin(@RequestParam("username") String username,
-			@RequestParam("password") String pass,
+	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)	// REQUEST: userloginvalidate ^ (POST)
+	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
+
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
@@ -54,14 +54,17 @@ public class AdminController {
 				model.addAttribute("message", "Invalid Username or Password");
 				return "userLogin";
 			}
+
 		} catch (Exception e) {
 			System.out.println("Exception:" + e);
 		}
 		return "userLogin";
+
 	}
 
 	@GetMapping("/admin")
 	public String adminlogin(Model model) {
+
 		return "adminlogin";
 	}
 
@@ -75,6 +78,7 @@ public class AdminController {
 
 	@GetMapping("/loginvalidate")
 	public String adminlog(Model model) {
+
 		return "adminlogin";
 	}
 
@@ -331,6 +335,41 @@ public class AdminController {
 			System.out.println("Exception:" + e);
 		}
 		return "redirect:/index";
+	}
+
+	@GetMapping("/admin/bestdeal")
+	public String getBestDeal(Model model) {
+		try {
+			Product bestDealProduct = getBestSellingProduct();
+			model.addAttribute("bestDealProduct", bestDealProduct);
+			return "bestdeal";
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			return "error";
+		}
+	}
+
+	private Product getBestSellingProduct() throws Exception {
+		Product product = null;
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+		Statement stmt = con.createStatement();
+		String query ="select * from products;";// "SELECT p.*, SUM(o.quantity) as total_quantity FROM products p JOIN orders o ON p.id = o.product_id GROUP BY p.id ORDER BY total_quantity DESC LIMIT 1";// 商品テーブルと注文テーブルを結合,最も売れ行きの良い商品を取得するための SQL クエリを定義.このクエリでは、商品テーブルと注文テーブルを結合し、商品 ID ごとに注文数量を合計して、合計数量が最も多い商品を取得
+		ResultSet rs = stmt.executeQuery(query);
+
+		if (rs.next()) {
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String image = rs.getString("image");
+			int categoryId = rs.getInt("categoryid");
+			int quantity = rs.getInt("quantity");
+			int price = rs.getInt("price");
+			int weight = rs.getInt("weight");
+			String description = rs.getString("description");
+			product = new Product(id, name, image, categoryId, quantity, price, weight, description);
+		}
+
+		return product;
 	}
 
 }
