@@ -1,11 +1,18 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import com.mysql.cj.protocol.Resultset;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
@@ -354,7 +361,7 @@ public class AdminController {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
-		String query ="select * from products;";// "SELECT p.*, SUM(o.quantity) as total_quantity FROM products p JOIN orders o ON p.id = o.product_id GROUP BY p.id ORDER BY total_quantity DESC LIMIT 1";// 商品テーブルと注文テーブルを結合,最も売れ行きの良い商品を取得するための SQL クエリを定義.このクエリでは、商品テーブルと注文テーブルを結合し、商品 ID ごとに注文数量を合計して、合計数量が最も多い商品を取得
+		String query ="select * from products;";
 		ResultSet rs = stmt.executeQuery(query);
 
 		if (rs.next()) {
