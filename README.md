@@ -11,6 +11,8 @@
 
 Burgundy: #912338 ![#912338](https://placehold.co/15x15/912338/912338/png)
 
+Yellow: #e5a712 ![#da3a16](https://placehold.co/15x15/e5a712/e5a712/png)
+
 Orange: #da3a16 ![#da3a16](https://placehold.co/15x15/da3a16/da3a16/png)
 
 Blue: #0072a8 ![#0072a8](https://placehold.co/15x15/0072a8/0072a8/png)
