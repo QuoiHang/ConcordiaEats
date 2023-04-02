@@ -1,6 +1,6 @@
 # ConcordiaEats
 
-*Updated: 2023-4-1*
+*Updated: 2023-4-2*
 
 ## branch-1 is available to work on. Feel free to branch from branch-1.
 

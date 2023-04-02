@@ -57,7 +57,7 @@
     <section>
         <div>
             <!-- NAV -->
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
                     <div class="d-flex">
                         <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40"/>
@@ -95,136 +95,139 @@
             </nav>
             <!-- NAV -->
             <!-- CAROUSEL -->
-            <div class="bg mt-5">
-                <div class="bg-product mt-5">
-                    <div class="container product">
-                        <div class="row">
-                            <div id="sliderproduct" class="carousel slide " data-ride="carousel" data-interval="10000">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#sliderproduct" data-slide-to="0" class="active"></li>
-                                    <li data-target="#sliderproduct" data-slide-to="1"></li>
-                                    <li data-target="#sliderproduct" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner" role="listbox" data-interval="10000000">
-                                    <div class="carousel-item active">
-                                        <div class="container text-center">
-                                            <div class="row">
-                                                <div class="col-sm-6 image">
-                                                    <div class="item">
-                                                        <h1>Today's Deal</h1>
-                                                        <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
-                                                    </div>
-                                                    <!--enditem-->
+            <div class="bg-product mt-5">
+                <div class="container product">
+                    <div class="row">
+                        <div id="sliderproduct" class="carousel slide " data-ride="carousel" data-interval="10000">
+                            <ol class="carousel-indicators">
+                                <li data-target="#sliderproduct" data-slide-to="0" class="active"></li>
+                                <li data-target="#sliderproduct" data-slide-to="1"></li>
+                                <li data-target="#sliderproduct" data-slide-to="2"></li>
+                            </ol>
+                            
+                            <div class="carousel-inner" role="listbox" data-interval="10000000">
+                                <div class="carousel-item active">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col-sm-6 image">
+                                                <div class="item">
+                                                    <h1>Today's Deal</h1>
+                                                    <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
                                                 </div>
-                                                <!--endcol-->
-                                                <div class="col-sm-6">
-                                                    <!--endtop-->
-                                                    <div class="details">
-                                                        <h2 class="cr3"> Burger</h2>
-                                                        <p class="cr4"> tomato, green salad, pita,<br> ketchup, mayonnaise.</p>
-                                                        <div class="rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                        <!--endrating-->
-                                                        <p class="cr1">$ 3.55-$ 5.55</s></p>
-                                                        <a href="/user/products" class="btn btn-food">Buy Now</a>
-                                                    </div>
-                                                    <!--enddetails-->
-                                                </div>
-                                                <!--endcol-->
+                                                <!--enditem-->
                                             </div>
-                                            <!--endrow-->
-                                        </div>
-                                        <!--endcontainer-->
-                                    </div>
-                                    <!--endcarousel-item-->
-                                    <div class="carousel-item">
-                                        <div class="container text-center">
-                                            <div class="row">
-                                                <div class="col-sm-6 image">
-                                                    <div class="item">
-                                                        <h1>Today's Deal</h1>
-                                                        <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
+                                            <!--endcol-->
+                                            <div class="col-sm-6">
+                                                <!--endtop-->
+                                                <div class="details">
+                                                    <h2 class="cr3"> Burger</h2>
+                                                    <p class="cr4"> tomato, green salad, pita,<br> ketchup, mayonnaise.</p>
+                                                    <div class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
                                                     </div>
-                                                    <!--enditem-->
+                                                    <!--endrating-->
+                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <a href="/user/products" class="btn btn-food">Buy Now</a>
                                                 </div>
-                                                <!--endcol-->
-                                                <div class="col-sm-6">
-                                                    <!--endtop-->
-                                                    <div class="details">
-                                                        <h2 class="cr3">cheeze pizza</h2>
-                                                        <p class="cr4">margarita,<br> ketchup, maionese.</p>
-                                                        <div class="rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                        <!--endrating-->
-                                                        <p class="cr1">$ 3.55-$ 5.55</s></p>
-                                                        <a href="/user/products" class="btn btn-food">Buy Now</a>
-                                                    </div>
-                                                    <!--enddetails-->
-                                                </div>
-                                                <!--endcol-->
+                                                <!--enddetails-->
                                             </div>
-                                            <!--endrow-->
+                                            <!--endcol-->
                                         </div>
-                                        <!--endcontainer-->
+                                        <!--endrow-->
                                     </div>
-                                    <!--endcarousel-item-->
-                                    <div class="carousel-item">
-                                        <div class="container text-center">
-                                            <div class="row">
-                                                <div class="col-sm-6 image">
-                                                    <div class="item">
-                                                        <h1></h1>
-                                                        <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
-                                                    </div>
-                                                    <!--enditem-->
-                                                </div>
-                                                <!--endcol-->
-                                                <div class="col-sm-6">
-                                                    <!--endtop-->
-                                                    <div class="details">
-                                                        <h2 class="cr3">fruits</h2>
-                                                        <p class="cr4">margarita,<br> ketchup, maionese.</p>
-                                                        <div class="rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </div>
-                                                        <!--endrating-->
-                                                        <p class="cr1">$ 3.55-$ 5.55</s></p>
-                                                        <a href="/user/products" class="btn btn-food">Buy Now</a>
-                                                    </div>
-                                                    <!--enddetails-->
-                                                </div>
-                                                <!--endcol-->
-                                            </div>
-                                            <!--endrow-->
-                                        </div>
-                                        <!--endcontainer-->
-                                    </div>
-                                    <!--endcarousel-item-->
-                                    <a class="carousel-control-prev fa fa-angle-left" href="#sliderproduct" role="button" data-slide="prev"></a>
-                                    <a class="carousel-control-next fa fa-angle-right" href="#sliderproduct" role="button" data-slide="next"></a>
+                                    <!--endcontainer-->
                                 </div>
-                                <!--endslidesliderproduct-->
+                                <!--endcarousel-item-->
+                                <div class="carousel-item">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col-sm-6 image">
+                                                <div class="item">
+                                                    <h1>Today's Deal</h1>
+                                                    <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
+                                                </div>
+                                                <!--enditem-->
+                                            </div>
+                                            <!--endcol-->
+                                            <div class="col-sm-6">
+                                                <!--endtop-->
+                                                <div class="details">
+                                                    <h2 class="cr3">cheeze pizza</h2>
+                                                    <p class="cr4">margarita,<br> ketchup, maionese.</p>
+                                                    <div class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <!--endrating-->
+                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <a href="/user/products" class="btn btn-food">Buy Now</a>
+                                                </div>
+                                                <!--enddetails-->
+                                            </div>
+                                            <!--endcol-->
+                                        </div>
+                                        <!--endrow-->
+                                    </div>
+                                    <!--endcontainer-->
+                                </div>
+                                <!--endcarousel-item-->
+                                <div class="carousel-item">
+                                    <div class="container text-center">
+                                        <div class="row">
+                                            <div class="col-sm-6 image">
+                                                <div class="item">
+                                                    <h1></h1>
+                                                    <img class="img-fluid" src="https://placehold.co/600x400/000000/FFFFFF.png" alt="">
+                                                </div>
+                                                <!--enditem-->
+                                            </div>
+                                            <!--endcol-->
+                                            <div class="col-sm-6">
+                                                <!--endtop-->
+                                                <div class="details">
+                                                    <h2 class="cr3">fruits</h2>
+                                                    <p class="cr4">margarita,<br> ketchup, maionese.</p>
+                                                    <div class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <!--endrating-->
+                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <a href="/user/products" class="btn btn-food">Buy Now</a>
+                                                </div>
+                                                <!--enddetails-->
+                                            </div>
+                                            <!--endcol-->
+                                        </div>
+                                        <!--endrow-->
+                                    </div>
+                                    <!--endcontainer-->
+                                </div>
+                                <!--endcarousel-item-->
+                                <a class="carousel-control-prev" href="#sliderproduct" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#sliderproduct" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
                             </div>
-                            <!--endrow-->
+                            <!--endslidesliderproduct-->
                         </div>
-                        <!--endcontainer-->
+                        <!--endrow-->
                     </div>
-                    <!--endbg-product-->
+                    <!--endcontainer-->
                 </div>
+                <!--endbg-product-->
             </div>
             <!-- CAROUSEL -->
             <style>
@@ -426,7 +429,7 @@
                     line-height: 40px;
                     opacity: 1;
                     top: 50%;
-                    transform: translate(-50%, -60%);
+                    transform: translate(0, -50%);
                 }
 
                 .bg {
@@ -463,44 +466,47 @@
                     text-decoration: none;
                 }
             </style>
-            <!-- BOTTOM -->
-            <div class="d-flex">
-                <div class="flex-fill" data-aos="zoom-in-down">
+
+            <!-- BOTTOM -->              
+            <div class="row m-3">
+                <div class="col-md-4">
                     <div class="card">
-                        <a class="img-card">
-                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        <a class="card-img-top">
+                            <img th:src="@{/images/User-Categories.avif}" src="/images/User-Categories.avif" height="300"/>
                         </a>
                         <div class="card-content">
-                            <h4 class="card-title">Best deal's</h4>
-                            <p class="">Checkout out our products<br></p>
+                            <h4 class="card-title">Categories</h4>
+                            <p>Checkout out our products.<br></p>
                         </div>
                         <div class="card-read-more">
-                            <a href="/user/products" class="btn btn-link btn-block">GO</a>
+                            <a href="/user/products" class="btn btn-link btn-block">Browse</a>
                         </div>
                     </div>
                 </div>
-                <div class="flex-fill" data-aos="zoom-in-down">
+
+                <div class="col-md-4">
                     <div class="card">
-                        <a class="img-card">
-                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        <a class="card-img-top">
+                            <img th:src="@{/images/User-Deal.webp}" src="/images/User-Deal.webp" height="300"/>
                         </a>
                         <div class="card-content">
-                            <h4 class="card-title">Best deal's</h4>
-                            <p class="">Checkout out our products<br></p>
+                            <h4 class="card-title">Best Deals</h4>
+                            <p>Checkout out our deals.<br></p>
                         </div>
                         <div class="card-read-more">
-                            <a href="/user/products" class="btn btn-link btn-block">GO</a>
+                            <a href="/user/products" class="btn btn-link btn-block">Browse</a>
                         </div>
                     </div>
-                </div>                
-                <div class="flex-fill" data-aos="zoom-in-down">
+                </div>
+
+                <div class="col-md-4">
                     <div class="card">
-                        <a class="img-card">
-                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        <a class="card-img-top">
+                            <img th:src="@{/images/User-Support.jpg}" src="/images/User-Support.jpg" height="300"/>
                         </a>
                         <div class="card-content">
                             <h4 class="card-title">Contact us</h4>
-                            <p class="">Find us.<br></p>
+                            <p>Need Help? Find Us.<br></p>
                         </div>
                         <div class="card-read-more">
                             <a href="/contact" class="btn btn-link btn-block">Contact</a>
@@ -568,7 +574,7 @@
                             margin: 0 0 0.3em;
                         }
                     }
-
+                    
                     .card {
                         display: block;
                         width: auto;
@@ -608,7 +614,7 @@
                         height: 200px;
                         object-fit: cover;
                         transition: all .25s ease;
-                        filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+                        filter: drop-shadow(0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.5));
                     }
 
                     .card-content {
