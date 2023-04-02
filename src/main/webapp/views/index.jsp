@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
-    <style>
+	<style>
         body {
             background-color: #f0f0f0;
         }      
@@ -45,57 +45,61 @@
             font-weight: bold;
         }
 
+        [class*="container"] {
+            max-width: 1170px !important;
+        }
+
         .concordia-txt-grey {
             color: #f0f0f0;
         }
-
     </style>
     <title>ConcordiaEats - Home</title>
 </head>
 
 <body>
-    <section>
-        <div>
-            <!-- NAV -->
-            <nav class="navbar navbar-expand-md navbar-dark sticky-top">
-                <div class="container-fluid">
-                    <div class="d-flex">
-                        <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40"/>
-                        <h4 class="my-auto">&nbsp;Welcome ${ username } </h4>
-                    </div>
+    <!-- NAV -->
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40"/>
+                <h4 class="my-auto">&nbsp;Welcome ${ username } </h4>
+            </div>
 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" th:href="@{/}" href="#">Home</a>
-                            <!-- TO-DO -->
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/ucategories}" href="categories">Categories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/favorites}" href="favorites">Favorites</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/cart}" href="cart">Cart</a>
-                            </li>
-                            <!-- TO-DO/ -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="profileDisplay">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- NAV -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}" href="#">Home</a>
+                    <!-- TO-DO -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/favorites}" href="favorites">Favorites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}" href="cart">Cart</a>
+                    </li>
+                    <!-- TO-DO/ -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="profileDisplay">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- NAV -->
+
+    <section>   
+        <div>
             <!-- CAROUSEL -->
-            <div class="bg-product mt-5">
+            <div class="bg-product">
                 <div class="container product">
                     <div class="row">
                         <div id="sliderproduct" class="carousel slide " data-ride="carousel" data-interval="10000">
@@ -120,7 +124,7 @@
                                             <div class="col-sm-6">
                                                 <!--endtop-->
                                                 <div class="details">
-                                                    <h2 class="cr3"> Burger</h2>
+                                                    <h2 class="cr3">Burger</h2>
                                                     <p class="cr4"> tomato, green salad, pita,<br> ketchup, mayonnaise.</p>
                                                     <div class="rating">
                                                         <i class="fa fa-star"></i>
@@ -130,7 +134,7 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                     <!--endrating-->
-                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <p class="cr1">$ 3.55-$ 5.55 </p>
                                                     <a href="/user/products" class="btn btn-food">Buy Now</a>
                                                 </div>
                                                 <!--enddetails-->
@@ -166,7 +170,7 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                     <!--endrating-->
-                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <p class="cr1">$ 3.55-$ 5.55</p>
                                                     <a href="/user/products" class="btn btn-food">Buy Now</a>
                                                 </div>
                                                 <!--enddetails-->
@@ -202,7 +206,7 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                     <!--endrating-->
-                                                    <p class="cr1">$ 3.55-$ 5.55</s></p>
+                                                    <p class="cr1">$ 3.55-$ 5.55</p>
                                                     <a href="/user/products" class="btn btn-food">Buy Now</a>
                                                 </div>
                                                 <!--enddetails-->
@@ -231,83 +235,6 @@
             </div>
             <!-- CAROUSEL -->
             <style>
-                :root {
-                    --cr1: #F36E45;
-                    --cr2: #fff;
-                    --cr3: #000000da;
-                    --cr4: #000000a1;
-                    --cr5: #BEB4B1;
-                    --fs1: 34px;
-                    --fs2: 24px;
-                    --fs3: 20px;
-                    --fs4: 16px;
-                    --fs5: 14px;
-                }
-
-                /* the same attribute */
-                .cr1 {
-                    color: var(--cr1);
-                }
-
-                .c2 {
-                    color: var(--cr2);
-                }
-
-                .cr3 {
-                    color: var(--cr3);
-                }
-
-                .cr4 {
-                    color: var(--cr4);
-                }
-
-                .cr5 {
-                    color: var(--cr5);
-                }
-
-                .fs1 {
-                    font-size: 34px;
-                }
-
-                .fs2 {
-                    font-size: 24px;
-                }
-
-                .fs3 {
-                    font-size: 20px;
-                }
-
-                .fs4 {
-                    font-size: 16px;
-                }
-
-                .fs5 {
-                    font-size: 14px;
-                }
-
-                /* end the same attribute */
-                @font-face {
-                    src: url(ProductSansRegular_0.ttf);
-                    font-family: product;
-                }
-
-                * {
-                    padding: 0px;
-                    margin: 0px;
-                    box-sizing: border-box;
-                    font-family: segoe ui
-                }
-
-                body,
-                html {
-                    width: 100%;
-                    height: 100%;
-                }
-
-                [class*="container"] {
-                    max-width: 1170px !important;
-                }
-
                 .bg-product {
                     /* SET Height cho nó rồi bảo sao ko lỗi? */
                     /*height: 446px;*/
@@ -440,36 +367,11 @@
                 #sliderproduct ol.carousel-indicators {
                     display: none;
                 }
-
-                .footer {
-                    position: fixed;
-                    bottom: 0;
-                    padding: 15px;
-                    width: 100%;
-                    text-align: center;
-                    background-color: #292929;
-                    color: #fff;
-                    font-family: sans-serif;
-                    font-size: 14px;
-                }
-
-                .footer img {
-                    width: 26px;
-                    position: relative;
-                    top: 0px;
-                    left: -3px;
-                }
-
-                .footer a {
-                    color: #fff;
-                    font-weight: bold;
-                    text-decoration: none;
-                }
             </style>
 
             <!-- BOTTOM -->              
-            <div class="row m-3">
-                <div class="col-md-4">
+            <div class="row m-3 justify-content-center">
+                <div class="col-lg-3 col-md-4">
                     <div class="card">
                         <a class="card-img-top">
                             <img th:src="@{/images/User-Categories.avif}" src="/images/User-Categories.avif" height="300"/>
@@ -484,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="card">
                         <a class="card-img-top">
                             <img th:src="@{/images/User-Deal.webp}" src="/images/User-Deal.webp" height="300"/>
@@ -499,7 +401,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-3 col-md-4">
                     <div class="card">
                         <a class="card-img-top">
                             <img th:src="@{/images/User-Support.jpg}" src="/images/User-Support.jpg" height="300"/>
@@ -520,30 +422,6 @@
                     @import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
                     @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap');
                     @import url('https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap');
-
-                    * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                        font-family: 'Titillium Web', sans-serif;
-                    }
-
-                    html,
-                    body {
-                        -moz-box-sizing: border-box;
-                        box-sizing: border-box;
-                        height: 100%;
-                        width: 100%;
-
-                        font-family: 'Roboto', sans-serif;
-                        font-weight: 400;
-                    }
-
-                    ::selection {
-                        color: white;
-                        background: black;
-                        font-weight: 700;
-                    }
 
                     h1.heading {
                         color: #fff;
@@ -590,10 +468,6 @@
                         box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
                     }
 
-                    .cfont {
-                        font-family: 'Arimo', sans-serif;
-                    }
-
                     .card:hover {
                         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
                     }
@@ -620,17 +494,6 @@
                     .card-content {
                         padding: 15px;
                         text-align: left;
-                    }
-
-                    .card-content p {
-                        font-family: 'M PLUS Rounded 1c', sans-serif;
-                    }
-
-                    .card-title {
-                        font-family: 'Signika', sans-serif;
-                        margin-top: 0px;
-                        font-weight: 600;
-                        font-size: 1.65em;
                     }
 
                     .card-title a {
