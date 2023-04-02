@@ -7,14 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
     <style>
         body {
-            background-color: #c8c8c8;
-        }
-
+            background-color: #f0f0f0;
+        }      
 
         .btn {
             background-color: #912338;
@@ -28,39 +27,51 @@
             background-color: #da3a16;
             color: #f0f0f0;
         }
-        
-        .container-fostrap {
-            padding: 1em;
-            display: table-cell;
-            background-image: linear-gradient(315deg, #b1ade2 0%, #7ddff8 74%);
-            text-align: center;
-            vertical-align: middle;
-        }        
+
+        .navbar{
+            color: #f0f0f0;
+            background-color: #912338;
+        }
+
+        .navbar a,
+        .nav-item a {
+            color: #f0f0f0;
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        .nav-item a:hover {
+            color: #e5a712 !important; 
+            font-weight: bold;
+        }
+
+        .concordia-txt-grey {
+            color: #f0f0f0;
+        }
+
     </style>
-    <title>ConcordiaEats Home</title>
+    <title>ConcordiaEats - Home</title>
 </head>
 
 <body>
-    <section class="wrapper">
-        <div class="container-fostrap">
+    <section>
+        <div>
             <!-- NAV -->
-            <nav class="navbar navbar-expand-lg sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a href="#" class="navbar-brand">
-                        <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40" class="d-inline-block align-top" />
-                        <h4>Welcome ${ username } </h4>
-                    </a>
-                    
+                    <div class="d-flex">
+                        <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40"/>
+                        <h4 class="my-auto">&nbsp;Welcome ${ username } </h4>
+                    </div>
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto"></ul>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link" th:href="@{/}" href="#">Home</a>
-                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/}" href="#">Home</a>
                             <!-- TO-DO -->
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{/ucategories}" href="categories">Categories</a>
@@ -80,7 +91,6 @@
                             </li>
                         </ul>
                     </div>
-                
                 </div>
             </nav>
             <!-- NAV -->
@@ -108,12 +118,6 @@
                                                 </div>
                                                 <!--endcol-->
                                                 <div class="col-sm-6">
-                                                    <div class="top d-flex justify-content-center">
-                                                        <a href=""><b>2</b> <br>days</a>
-                                                        <a href=""><b>20</b> <br> hours</a>
-                                                        <a href=""><b>15</b> <br>min</a>
-                                                        <a href=""><b>2</b> <br> sec</a>
-                                                    </div>
                                                     <!--endtop-->
                                                     <div class="details">
                                                         <h2 class="cr3"> Burger</h2>
@@ -150,12 +154,6 @@
                                                 </div>
                                                 <!--endcol-->
                                                 <div class="col-sm-6">
-                                                    <div class="top d-flex justify-content-center">
-                                                        <a href=""><b>2</b> <br>days</a>
-                                                        <a href=""><b>20</b> <br> hours</a>
-                                                        <a href=""><b>15</b> <br>min</a>
-                                                        <a href=""><b>2</b> <br> sec</a>
-                                                    </div>
                                                     <!--endtop-->
                                                     <div class="details">
                                                         <h2 class="cr3">cheeze pizza</h2>
@@ -192,12 +190,6 @@
                                                 </div>
                                                 <!--endcol-->
                                                 <div class="col-sm-6">
-                                                    <div class="top d-flex justify-content-center">
-                                                        <a href=""><b>2</b> <br>days</a>
-                                                        <a href=""><b>20</b> <br> hours</a>
-                                                        <a href=""><b>15</b> <br>min</a>
-                                                        <a href=""><b>2</b> <br> sec</a>
-                                                    </div>
                                                     <!--endtop-->
                                                     <div class="details">
                                                         <h2 class="cr3">fruits</h2>
@@ -333,9 +325,9 @@
                     box-shadow: 0px 4px 8px 0px #959595;
                     position: relative;
                     /* Thêm cái của nợ này vào bảo sao nó ko tràn bờ đê */
-                /*top: -44px;
-                  padding: 100px;
-                  padding-top: 40px;*/
+                    /*top: -44px;
+                    padding: 100px;
+                    padding-top: 40px;*/
                 }
 
                 .item {
@@ -423,7 +415,6 @@
                     transition: 0.4s;
                 }
 
-
                 #sliderproduct a.carousel-control-prev,
                 #sliderproduct a.carousel-control-next {
                     border-radius: 50%;
@@ -473,49 +464,50 @@
                 }
             </style>
             <!-- BOTTOM -->
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
+            <div class="d-flex">
+                <div class="flex-fill" data-aos="zoom-in-down">
                     <div class="card">
                         <a class="img-card">
                             <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
                         </a>
                         <div class="card-content">
-                            <h4 class="card-title">
-                                Best deal's
-                            </h4>
-                            <p class="">
-                                Checkout out our products
-                                <br>
-                            </p>
+                            <h4 class="card-title">Best deal's</h4>
+                            <p class="">Checkout out our products<br></p>
                         </div>
                         <div class="card-read-more">
-                            <a href="/user/products" class="btn btn-link btn-block">
-                                GO
-                            </a>
+                            <a href="/user/products" class="btn btn-link btn-block">GO</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-aos="zoom-in-down">
+                <div class="flex-fill" data-aos="zoom-in-down">
                     <div class="card">
                         <a class="img-card">
                             <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
                         </a>
                         <div class="card-content">
-                            <h4 class="card-title">
-                                Contact us
-                            </h4>
-                            <p class="">
-                                find us.
-                                <br>
-                            </p>
+                            <h4 class="card-title">Best deal's</h4>
+                            <p class="">Checkout out our products<br></p>
                         </div>
                         <div class="card-read-more">
-                            <a href="/contact" class="btn btn-link btn-block">
-                                Contact
-                            </a>
+                            <a href="/user/products" class="btn btn-link btn-block">GO</a>
+                        </div>
+                    </div>
+                </div>                
+                <div class="flex-fill" data-aos="zoom-in-down">
+                    <div class="card">
+                        <a class="img-card">
+                            <img src="https://placehold.co/600x400/000000/FFFFFF.png" />
+                        </a>
+                        <div class="card-content">
+                            <h4 class="card-title">Contact us</h4>
+                            <p class="">Find us.<br></p>
+                        </div>
+                        <div class="card-read-more">
+                            <a href="/contact" class="btn btn-link btn-block">Contact</a>
                         </div>
                     </div>
                 </div>
+
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300&display=swap');
                     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
@@ -545,12 +537,6 @@
                         color: white;
                         background: black;
                         font-weight: 700;
-                    }
-
-                    .wrapper {
-                        display: table;
-                        height: 100%;
-                        width: 100%;
                     }
 
                     h1.heading {
@@ -655,46 +641,6 @@
                         padding: 10px;
                         font-weight: 600;
                         text-transform: uppercase
-                    }
-
-                    .navbar {
-                        background-color: #912338;
-                        z-index: 999;
-                        width: 100%;
-                    }
-
-                    .navbar::before {
-                        content: "";
-                        position: absolute;
-                        top: 0%;
-                        bottom: 0%;
-                        left: 0;
-                        right: 0;
-                        z-index: -1;
-                    }
-
-                    .nav-item a {
-                        color: white;
-                        font-weight: 500;
-                        font-size: 17px;
-                        transition: 0.5s ease;
-                    }
-
-                    .nav-item a:hover {
-                        color: rgb(0, 195, 255);
-                        font-weight: bold;
-                        transition: 0.5s ease-in-out;
-
-                    }
-
-                    .navbar-brand {
-                        color: white;
-                        font-weight: 600;
-                        font-size: 20px;
-                    }
-
-                    .nav-item {
-                        margin-right: 20px;
                     }
                 </style>
             </div>
