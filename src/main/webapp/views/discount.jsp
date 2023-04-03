@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -6,35 +7,57 @@
     <meta charset="UTF-8">
     <title>Discount</title>
     <script>
-        function applyDiscount() {
-            var discountRate = document.getElementById("discountRate").value;
+        function applyDiscount(productId) {
+            var discountRate = document.getElementById("discountRate-" + productId).value;
             if (discountRate >= 0 && discountRate <= 100) {
-                var originalPrice = parseFloat(document.getElementById("originalPrice").innerText);
-                var discountedPrice = originalPrice * (1 - discountRate / 100);
-                document.getElementById("discountValue").innerText = discountRate + "%";
-                document.getElementById("discountedPrice").innerText = discountedPrice.toFixed(2);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        location.reload();
+                    }
+                };
+                xhttp.open("POST", "admin/applyDiscount", true);
+                xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhttp.send("productId=" + productId + "&discountRate=" + discountRate);
             } else {
                 alert("Please enter a valid discount rate between 0 and 100.");
             }
+        }
+
+        function resetDiscountRate(productId) {
+            document.getElementById("discountRate-" + productId).value = 0;
         }
     </script>
 </head>
 <body>
     <h1>Discount</h1>
-    <div>
-        <img src="${discountProduct.image}" alt="Product Image">
-        <h2>${discountProduct.name}</h2>
-        <p>Original Price: <span id="originalPrice">${discountProduct.price}</span></p>
-        <p>Discount: <span id="discountValue">${discountProduct.discount * 100}%</span></p>
-        <p>Discounted Price: <span id="discountedPrice">${discountProduct.discountedPrice}</span></p>
-        <p>Quantity: <span>${discountProduct.quantity}</span></p>
-        <p>Weight: <span>${discountProduct.weight}</span></p>
-        <p>Description: <span>${discountProduct.description}</span></p>
-    </div>
-    <div>
-        <label for="discountRate">Discount Rate:</label>
-        <input type="number" id="discountRate" min="0" max="100" step="1" value="${discountProduct.discount * 100}">
-        <button onclick="applyDiscount()">Apply Discount</button>
-    </div>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Original Price</th>
+            <th>Discount</th>
+            <th>Discounted Price</th>
+            <th>Discount Rate</th>
+            <th>Reset Discount</th>
+            <th>Apply Discount</th>
+        </tr>
+        <c:forEach items="${productList}" var="product">
+            <tr>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.onSale ? product.discountedPrice / product.price * 100 : 0}%</td>
+                <td>${product.discountedPrice}</td>
+                <td>
+                    <input type="number" id="discountRate-${product.id}" min="0" max="100" step="1" value="${product.onSale ? product.discountedPrice / product.price * 100 : 0}">
+                </td>
+                <td>
+                    <button onclick="resetDiscountRate(${product.id})">Reset</button>
+                </td>
+                <td>
+                    <button onclick="applyDiscount(${product.id})">Apply Discount</button>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

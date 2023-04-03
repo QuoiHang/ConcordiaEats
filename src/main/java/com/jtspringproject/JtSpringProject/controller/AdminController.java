@@ -1,10 +1,13 @@
 package com.jtspringproject.JtSpringProject.controller;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class AdminController {
@@ -343,39 +347,63 @@ public class AdminController {
 		}
 		return "redirect:/index";
 	}
-	@GetMapping("/admin/discount")
-	public String getDiscount(Model model) {
-	    try {
-	        Product discountProduct = getDiscountProduct();
-	        model.addAttribute("discountProduct", discountProduct);
-	        return "discount";
-	    } catch (Exception e) {
-	        System.out.println("Exception: " + e);
-	        return "error";
+
+	  @GetMapping("/admin/discount")
+	    public String getAllProducts(Model model) {
+	        try {
+	            List<Product> productList = getAllProducts();
+	            model.addAttribute("productList", productList);
+	            return "discount";
+	        } catch (Exception e) {
+	            System.out.println("Exception: " + e);
+	            return "error";
+	        }
+	    }  private List<Product> getAllProducts() throws Exception {
+	        List<Product> productList = new ArrayList<>();
+	        Class.forName("com.mysql.jdbc.Driver");
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	        Statement stmt = con.createStatement();
+	        String query = "select * from products;";
+	        ResultSet rs = stmt.executeQuery(query);
+
+	        while (rs.next()) {
+	            int id = rs.getInt("id");
+	            String name = rs.getString("name");
+	            String image = rs.getString("image");
+	            int categoryId = rs.getInt("categoryid");
+	            int quantity = rs.getInt("quantity");
+	            int price = rs.getInt("price");
+	            int weight = rs.getInt("weight");
+	            String description = rs.getString("description");
+	            boolean onSale = rs.getBoolean("onSale");
+	            double discountedPrice = rs.getDouble("discountedPrice");
+	            Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale, discountedPrice);
+	            productList.add(product);
+	        }
+
+	        return productList;
 	    }
-	}
 
-	private Product getDiscountProduct() throws Exception {
-	    Product product = null;
-	    Class.forName("com.mysql.jdbc.Driver");
-	    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-	    Statement stmt = con.createStatement();
-	    String query ="select * from products;";
-	    ResultSet rs = stmt.executeQuery(query);
-
-	    if (rs.next()) {
-	        int id = rs.getInt("id");
-	        String name = rs.getString("name");
-	        String image = rs.getString("image");
-	        int categoryId = rs.getInt("categoryid");
-	        int quantity = rs.getInt("quantity");
-	        int price = rs.getInt("price");
-	        int weight = rs.getInt("weight");
-	        String description = rs.getString("description");
-	        product = new Product(id, name, image, categoryId, quantity, price, weight, description);
+	    @PostMapping("/admin/applyDiscount")
+	    public void applyDiscount(@RequestParam("productId") int productId, @RequestParam("discountRate") double discountRate, HttpServletResponse response) {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	            PreparedStatement pst = con.prepareStatement("UPDATE products SET onSale = 1, discountedPrice = price * (1 - ?) WHERE id = ?;");
+	            pst.setBoolean(1, true);
+	            pst.setDouble(2, discountRate / 100);
+	            pst.setInt(3, productId);
+	            int i = pst.executeUpdate();
+	            if (i > 0) {
+	                response.setStatus(HttpServletResponse.SC_OK);
+	            } else {
+	                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Exception: " + e);
+	            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	        }
 	    }
-
-	    return product;
-	}
+	
 
 }
