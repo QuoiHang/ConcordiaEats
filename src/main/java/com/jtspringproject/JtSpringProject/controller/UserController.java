@@ -60,4 +60,14 @@ public class UserController {
 	public String contact() {
 		return "contact";
 	}
+	
+	@GetMapping("/favorites")
+	public String favorites() {
+		return "favorites";
+	}
+	
+	@GetMapping("/cart")
+	public String cart() {
+		return "cart";
+	}
 }

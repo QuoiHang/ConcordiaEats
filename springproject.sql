@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2023 at 12:56 AM
+-- Generation Time: Apr 12, 2023 at 10:27 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -28,10 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cart` (
-  `user_ID` int(11) NOT NULL,
-  `product_ID` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`user_id`, `product_id`, `quantity`) VALUES
+(1, 1, 3),
+(1, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -62,9 +70,17 @@ INSERT INTO `categories` (`categoryid`, `name`) VALUES
 --
 
 CREATE TABLE `favorites` (
-  `user_ID` int(11) NOT NULL,
-  `product_ID` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `favorites`
+--
+
+INSERT INTO `favorites` (`user_id`, `product_id`) VALUES
+(1, 1),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -97,24 +113,25 @@ CREATE TABLE `products` (
   `image` text DEFAULT NULL,
   `categoryid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `weight` int(11) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `price` float NOT NULL,
+  `weight` int(11) NOT NULL,
+  `description` text NOT NULL,
   `onSale` tinyint(1) NOT NULL DEFAULT 0,
-  `discountedPrice` double NOT NULL DEFAULT 0
+  `discountedPrice` double NOT NULL DEFAULT 0,
+  `sold` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `image`, `categoryid`, `quantity`, `price`, `weight`, `description`, `onSale`, `discountedPrice`) VALUES
-(1, 'apple', NULL, 3, 5, 3, 10, 'red python', 0, 0),
-(2, 'burger', NULL, 1, 255, 6, 27, '', 0, 0),
-(3, 'coke', NULL, 5, 100, 4, NULL, NULL, 0, 0),
-(4, 'potato', NULL, 4, 10, 2, NULL, NULL, 0, 0),
-(5, 'noodles', NULL, 1, 40, 12, NULL, NULL, 0, 0),
-(6, 'water', NULL, 5, 100, 2, NULL, NULL, 0, 0);
+INSERT INTO `products` (`id`, `name`, `image`, `categoryid`, `quantity`, `price`, `weight`, `description`, `onSale`, `discountedPrice`, `sold`) VALUES
+(1, 'apple', NULL, 3, 50, 3, 250, 'red python', 0, 0, 10),
+(2, 'burger', NULL, 1, 255, 6, 200, '', 0, 0, 0),
+(3, 'coke', NULL, 5, 100, 4, 400, '', 0, 0, 0),
+(4, 'potato', NULL, 4, 10, 2, 250, '', 0, 0, 5),
+(5, 'noodles', NULL, 1, 40, 12, 800, '', 0, 0, 2),
+(6, 'water', NULL, 5, 100, 2, 500, '', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -147,8 +164,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `enabled`, `emai
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`user_ID`),
-  ADD KEY `product_ID` (`product_ID`);
+  ADD PRIMARY KEY (`user_id`,`product_id`);
 
 --
 -- Indexes for table `categories`
@@ -160,8 +176,7 @@ ALTER TABLE `categories`
 -- Indexes for table `favorites`
 --
 ALTER TABLE `favorites`
-  ADD PRIMARY KEY (`user_ID`),
-  ADD KEY `product_ID` (`product_ID`);
+  ADD PRIMARY KEY (`user_id`,`product_id`);
 
 --
 -- Indexes for table `products`
@@ -174,7 +189,8 @@ ALTER TABLE `products`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -184,13 +200,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `categoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `categoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -206,15 +222,15 @@ ALTER TABLE `users`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `favorites`
 --
 ALTER TABLE `favorites`
-  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`product_ID`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`
