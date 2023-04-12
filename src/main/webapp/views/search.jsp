@@ -55,7 +55,7 @@
             color: #f0f0f0;
         }
     </style>
-    <title>Cart</title>
+    <title>Categories</title>
 </head>
 
 <body>
@@ -79,13 +79,13 @@
                         <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/Search}" href="/search">Search</a>
+                        <a class="nav-link active" th:href="@{/Search}" href="#">Search</a>
                     </li>                         
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/favorites}" href="/favorites">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/cart}" href="#">Cart</a>
+                        <a class="nav-link" th:href="@{/cart}" href="/cart">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="profileDisplay">Profile</a>
@@ -98,12 +98,79 @@
         </div>
     </nav>
     <!-- NAV -->
+    
+    <!-- SEARCH BAR -->
+    <div class="container">
+		<div class="input-group my-3">
+			<input type="text" class="form-control" id="searchInput" placeholder="Enter a product to search">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="button" onclick="search()">Search</button>
+			</div>
+		</div>
 
-	<div class="container-fluid">
-		<table class="table">
-
+<table id="resultTable" class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Category</th>
+					<th>Image</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Weight</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Results will be displayed here -->
+				<%
+				if(request.getParameter("keyword") != null && !request.getParameter("keyword").isEmpty()) {
+					String keyword = request.getParameter("keyword");
+					String url = "jdbc:mysql://localhost:3306/springproject";
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection(url, "root", "");
+					Statement stmt = con.createStatement();
+					Statement stmt2 = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
+					while (rs.next()) {
+						String name = rs.getString("name");
+						int categoryid = rs.getInt("categoryid");
+						int quantity = rs.getInt("quantity");
+						int price = rs.getInt("price");
+						String weight = rs.getString("weight");
+						int id = rs.getInt("id");
+				%>
+				<tr class="product-row">
+					<td><%= id %></td>
+					<td><%= name %></td>
+					<td>
+						<%
+							ResultSet rs2 = stmt2.executeQuery("select name from categories where categoryid = "+categoryid+";");
+							if(rs2.next())
+							{
+								out.print(rs2.getString(1));
+							}
+						%>
+					</td>
+					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px"></td>
+					<td><%= quantity %></td>
+					<td><%= price %></td>
+					<td><%= weight %></td>
+					<td>
+						<form action="/buy" method="get">
+							<input type="hidden" name="id" value="<%=id%>">
+							<input type="submit" value="Buy" class="btn btn-info btn-lg">
+						</form>
+					</td>
+				</tr>
+				<%
+					}
+				}
+				%>
+			</tbody>
 		</table>
-	</div>
+    </div>
+    <!-- SEARCH BAR -->
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
