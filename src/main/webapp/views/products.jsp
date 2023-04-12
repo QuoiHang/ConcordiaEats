@@ -149,10 +149,21 @@
 		%>
 		
 		
+		
+		
 		<table class="table">
-				<tr>
-					<th scope="col">Most Selling</th>
-				</tr>
+				
+				<h3> Most Selling </h3>
+				
+			<tr>
+				<th scope="col">Serial No.</th>
+				<th scope="col">Product Name</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Price</th>
+				<th scope="col">Weight</th>
+				<th scope="col">Purchases</th>
+
+			</tr>
 				
 				<tbody>
 					<tr>
@@ -171,8 +182,33 @@
 						<%= rs1.getInt(1) %>
 					</td>
 					
+					<td>
+						<%= rs1.getString(2) %>
+					</td>
+					
+					<td>
+						<%= rs1.getInt(5) %>
+					</td>
+
+					<td>
+						<%= rs1.getInt(6) %>
+					</td> 
+					
+					<td>
+						<%= rs1.getInt(7) %>
+					</td>
+					
+					<td>
+						<%= rs1.getInt(9) %>
+					</td>
 					
 						
+						
+						
+						
+						
+				
+					
 					</tr>
 				
 				
@@ -190,8 +226,17 @@
 		%>
 		
 		<table class="table">
+				
+				<h3> Least Selling </h3>
+				
 				<tr>
-					<th scope="col">Least Selling</th>
+				<th scope="col">Serial No.</th>
+				<th scope="col">Product Name</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Price</th>
+				<th scope="col">Weight</th>
+				<th scope="col">Purchases</th>
+
 				</tr>
 				
 				<tbody>
@@ -210,6 +255,26 @@
 					%>
 					<td>
 						<%= rs5.getInt(1) %>
+					</td>
+					
+					<td>
+						<%= rs5.getString(2) %>
+					</td>
+					
+					<td>
+						<%= rs5.getInt(5) %>
+					</td>
+
+					<td>
+						<%= rs5.getInt(6) %>
+					</td> 
+					
+					<td>
+						<%= rs5.getInt(7) %>
+					</td>
+					
+					<td>
+						<%= rs5.getInt(9) %>
 					</td>
 					
 					
