@@ -48,6 +48,12 @@ public class UserController {
 	public String getproduct(Model model) {
 		return "uproduct";
 	}
+	
+	// direct to '/buy'
+	@GetMapping("/search")
+	public String search() {
+		return "search";
+	}
 
 	// direct to '/buy'
 	@GetMapping("/buy")
