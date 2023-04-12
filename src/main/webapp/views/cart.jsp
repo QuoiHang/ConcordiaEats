@@ -55,7 +55,7 @@
             color: #f0f0f0;
         }
     </style>
-    <title>Categories</title>
+    <title>Cart</title>
 </head>
 
 <body>
@@ -76,16 +76,16 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}" href="/index">Home</a>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/uproduct}" href="#">Categories</a>
+                        <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/Search}" href="/search">Search</a>
-                    </li>                    
+                    </li>                         
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/favorites}" href="/favorites">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/cart}" href="/cart">Cart</a>
+                        <a class="nav-link active" th:href="@{/cart}" href="#">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="profileDisplay">Profile</a>
@@ -99,86 +99,11 @@
     </nav>
     <!-- NAV -->
 
-	<!-- CATAGORIES -->
 	<div class="container-fluid">
 		<table class="table">
-			<tr>
-				<th scope="col">Serial No.</th>
-				<th scope="col">Product Name</th>
-				<th scope="col">Category</th>
-				<th scope="col">Preview</th>
-				<th scope="col">Quantity</th>
-				<th scope="col">Price</th>
-				<th scope="col">Weight</th>
-				<th scope="col">Description</th>
-				<th scope="col">Buy</th>	
-			</tr>
-			<tbody>
-				<tr>
-					<%
-					try {
-						String url = "jdbc:mysql://localhost:3306/springproject";
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection(url, "root", "");
-						Statement stmt = con.createStatement();
-						Statement stmt2 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("select * from products");
-					%>
-					<%
-					while (rs.next()) {
-					%>
-					<td>
-						<%= rs.getInt(1) %>
-					</td>
-					<td>
-						<%= rs.getString(2) %>
-					</td>
-					<td>
-						<%
-							int categoryid = rs.getInt(4);
-							ResultSet rs2 = stmt2.executeQuery("select * from categories where categoryid = "+categoryid+";");
-							if(rs2.next())
-							{
-								out.print(rs2.getString(2));
-							}
-						%>
-						
-					</td>
-					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px">
-					<td>
-						<%= rs.getInt(5) %>
-					</td>
-					<td>
-						<%= rs.getInt(6) %>
-					</td>
-					<td>
-						<%= rs.getInt(7) %>
-					</td>
-					<td>
-						<%= rs.getString(8) %>
-					</td>
 
-					<td>
-						<form action="/buy" method="get">
-							<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
-							<input type="submit" value="Buy" class="btn btn-info btn-lg">
-						</form>
-					</td>
-					<td>
-					</td>
-				</tr>
-				<%
-				}
-				%>
-			</tbody>
 		</table>
-		<%
-		} catch (Exception ex) {
-		out.println("Exception Occurred:: " + ex.getMessage());
-		}
-		%>
 	</div>
-	<!-- CATAGORIES -->
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

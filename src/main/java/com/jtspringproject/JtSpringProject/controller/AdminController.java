@@ -38,7 +38,7 @@ public class AdminController {
 		return "userLogin";
 	}
 
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)	// REQUEST: userloginvalidate ^ (POST)
+	@PostMapping(value = "userloginvalidate")	// REQUEST: userloginvalidate ^ (POST)
 	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
 
@@ -83,7 +83,7 @@ public class AdminController {
 		return "adminlogin";
 	}
 
-	@RequestMapping(value = "loginvalidate", method = RequestMethod.POST)
+	@PostMapping(value = "loginvalidate")
 	public String adminlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
 
@@ -101,7 +101,7 @@ public class AdminController {
 		return "categories";
 	}
 
-	@RequestMapping(value = "admin/sendcategory", method = RequestMethod.GET)
+	@GetMapping(value = "admin/sendcategory")
 	public String addcategorytodb(@RequestParam("categoryname") String catname) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -202,7 +202,7 @@ public class AdminController {
 		return "productsUpdate";
 	}
 
-	@RequestMapping(value = "admin/products/updateData", method = RequestMethod.POST)
+	@PostMapping(value = "admin/products/updateData")
 	public String updateproducttodb(@RequestParam("id") int id, @RequestParam("name") String name,
 			@RequestParam("price") int price, @RequestParam("weight") int weight,
 			@RequestParam("quantity") int quantity, @RequestParam("description") String description,
@@ -250,7 +250,7 @@ public class AdminController {
 		return "redirect:/admin/categories";
 	}
 
-	@RequestMapping(value = "admin/products/sendData", method = RequestMethod.POST)
+	@PostMapping(value = "admin/products/sendData")
 	public String addproducttodb(@RequestParam("name") String name, @RequestParam("categoryid") String catid,
 			@RequestParam("price") int price, @RequestParam("weight") int weight,
 			@RequestParam("quantity") int quantity, @RequestParam("description") String description,
@@ -287,7 +287,7 @@ public class AdminController {
 
 	@GetMapping("profileDisplay")
 	public String profileDisplay(Model model) {
-		String displayusername, displaypassword, displayemail, displayaddress;
+		String displayusername, displaypassword, displayemail;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
@@ -297,14 +297,12 @@ public class AdminController {
 			if (rst.next()) {
 				int userid = rst.getInt(1);
 				displayusername = rst.getString(2);
-				displayemail = rst.getString(3);
-				displaypassword = rst.getString(4);
-				displayaddress = rst.getString(5);
+				displaypassword = rst.getString(3);
+				displayemail = rst.getString(6);
 				model.addAttribute("userid", userid);
 				model.addAttribute("username", displayusername);
 				model.addAttribute("email", displayemail);
 				model.addAttribute("password", displaypassword);
-				model.addAttribute("address", displayaddress);
 			}
 		} catch (Exception e) {
 			System.out.println("Exception:" + e);
@@ -313,10 +311,10 @@ public class AdminController {
 		return "updateProfile";
 	}
 
-	@RequestMapping(value = "updateuser", method = RequestMethod.POST)
+	@PostMapping(value = "updateuser")
 	public String updateUserProfile(@RequestParam("userid") int userid, @RequestParam("username") String username,
-			@RequestParam("email") String email, @RequestParam("password") String password,
-			@RequestParam("address") String address)
+			@RequestParam("email") String email, @RequestParam("password") String password
+			/*, @RequestParam("address") String address */)
 
 	{
 		try {
@@ -324,12 +322,13 @@ public class AdminController {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 
 			PreparedStatement pst = con
-					.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
+					.prepareStatement("update users set username= ?,email = ?,password= ? where uid = ?;");
 			pst.setString(1, username);
 			pst.setString(2, email);
 			pst.setString(3, password);
-			pst.setString(4, address);
-			pst.setInt(5, userid);
+			// pst.setString(4, address);
+			// changed below 5 to 4 as is
+			pst.setInt(4, userid);
 			int i = pst.executeUpdate();
 			usernameforclass = username;
 		} catch (Exception e) {

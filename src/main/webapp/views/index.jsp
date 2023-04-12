@@ -73,17 +73,18 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" th:href="@{/}" href="#">Home</a>
-                    <!-- TO-DO -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/favorites}" href="favorites">Favorites</a>
+                        <a class="nav-link" th:href="@{/Search}" href="/search">Search</a>
+                    </li>                         
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/favorites}" href="/favorites">Favorites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/cart}" href="cart">Cart</a>
+                        <a class="nav-link" th:href="@{/cart}" href="/cart">Cart</a>
                     </li>
-                    <!-- TO-DO/ -->
                     <li class="nav-item">
                         <a class="nav-link" href="profileDisplay">Profile</a>
                     </li>
