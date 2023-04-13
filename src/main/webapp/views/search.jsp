@@ -101,72 +101,71 @@
     
     <!-- SEARCH BAR -->
     <div class="container">
-		<div class="input-group my-3">
-			<input type="text" class="form-control" id="searchInput" placeholder="Enter a product to search">
-			<div class="input-group-append">
-				<button class="btn btn-primary" type="button" onclick="search()">Search</button>
-			</div>
+				<div class="input-group my-3">
+			<form method="get">
+				<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit">Search</button>
+				</div>
+			</form>
 		</div>
 
-<table id="resultTable" class="table">
+		<table id="resultTable" class="table">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
+					<th>Serial No.</th>
+					<th>Product Name</th>
 					<th>Category</th>
-					<th>Image</th>
+					<th>Preview</th>
 					<th>Quantity</th>
 					<th>Price</th>
 					<th>Weight</th>
-					<th>Action</th>
+					<th>Description</th>
+					<th>Buy</th>	
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Results will be displayed here -->
 				<%
-				if(request.getParameter("keyword") != null && !request.getParameter("keyword").isEmpty()) {
-					String keyword = request.getParameter("keyword");
-					String url = "jdbc:mysql://localhost:3306/springproject";
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection(url, "root", "");
-					Statement stmt = con.createStatement();
-					Statement stmt2 = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
-					while (rs.next()) {
-						String name = rs.getString("name");
-						int categoryid = rs.getInt("categoryid");
-						int quantity = rs.getInt("quantity");
-						int price = rs.getInt("price");
-						String weight = rs.getString("weight");
-						int id = rs.getInt("id");
+					if(request.getParameter("keyword")!=null) {
+						String keyword=request.getParameter("keyword");
+						String url = "jdbc:mysql://localhost:3306/springproject";
+						Class.forName("com.mysql.cj.jdbc.Driver");
+						Connection con = DriverManager.getConnection(url, "root", "");
+						Statement stmt = con.createStatement();
+						Statement stmt2 = con.createStatement();
+						ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
+						while (rs.next()) {
+							String name = rs.getString("name");
+							int categoryid = rs.getInt("categoryid");
+							int quantity = rs.getInt("quantity");
+							int price = rs.getInt("price");
+							String weight = rs.getString("weight");
+							int id = rs.getInt("id");
+							ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
+							rs2.next();
+							String categoryName = rs2.getString("name");
 				%>
-				<tr class="product-row">
-					<td><%= id %></td>
-					<td><%= name %></td>
-					<td>
+							<tr>
+								<td><%= id %></td>
+								<td><%= name %></td>
+								<td><%= categoryName %></td>
+								<td><img src='https://placehold.co/100x100.png' height='100px' width='100px'></td>
+								<td><%= quantity %></td>
+								<td><%= price %></td>
+								<td><%= weight %></td>
+								<td><%= "" %></td>
+								<td>
+									<form action="/buy" method="get">
+										<input type="hidden" name="id" value="<%=id%>">
+										<input type="submit" value="Buy" class="btn btn-info btn-lg">
+									</form>
+								</td>
+								<td><%= "" %></td>
+							</tr>
 						<%
-							ResultSet rs2 = stmt2.executeQuery("select name from categories where categoryid = "+categoryid+";");
-							if(rs2.next())
-							{
-								out.print(rs2.getString(1));
 							}
-						%>
-					</td>
-					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px"></td>
-					<td><%= quantity %></td>
-					<td><%= price %></td>
-					<td><%= weight %></td>
-					<td>
-						<form action="/buy" method="get">
-							<input type="hidden" name="id" value="<%=id%>">
-							<input type="submit" value="Buy" class="btn btn-info btn-lg">
-						</form>
-					</td>
-				</tr>
-				<%
-					}
-				}
-				%>
+						}
+					%>
 			</tbody>
 		</table>
     </div>
