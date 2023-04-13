@@ -1,4 +1,5 @@
 package com.jtspringproject.JtSpringProject.controller;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class AdminController {
 	int userlogcheck = 1; // to check user
 	int adminlogcheck = 0;
 	String usernameforclass = "";
 
-	@RequestMapping(value = { "/", "/logout" })	// REQUEST: /, /logout
+	@RequestMapping(value = { "/", "/logout" }) // REQUEST: /, /logout
 	public String returnIndex() {
 		adminlogcheck = 0;
 		usernameforclass = "";
@@ -48,7 +48,7 @@ public class AdminController {
 		return "userLogin";
 	}
 
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)	// REQUEST: userloginvalidate ^ (POST)
+	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST) // REQUEST: userloginvalidate ^ (POST)
 	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
 
@@ -348,62 +348,90 @@ public class AdminController {
 		return "redirect:/index";
 	}
 
-	  @GetMapping("/admin/discount")
-	    public String getAllProducts(Model model) {
-	        try {
-	            List<Product> productList = getAllProducts();
-	            model.addAttribute("productList", productList);
-	            return "discount";
-	        } catch (Exception e) {
-	            System.out.println("Exception: " + e);
-	            return "error";
-	        }
-	    }  private List<Product> getAllProducts() throws Exception {
-	        List<Product> productList = new ArrayList<>();
-	        Class.forName("com.mysql.jdbc.Driver");
-	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-	        Statement stmt = con.createStatement();
-	        String query = "select * from products;";
-	        ResultSet rs = stmt.executeQuery(query);
+	@GetMapping("/admin/discount")
+	public String getAllProducts(Model model) {
+		try {
+			List<Product> productList = getAllProducts();
+			model.addAttribute("productList", productList);
+			return "discount";
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			return "error";
+		}
+	}
 
-	        while (rs.next()) {
-	            int id = rs.getInt("id");
-	            String name = rs.getString("name");
-	            String image = rs.getString("image");
-	            int categoryId = rs.getInt("categoryid");
-	            int quantity = rs.getInt("quantity");
-	            int price = rs.getInt("price");
-	            int weight = rs.getInt("weight");
-	            String description = rs.getString("description");
-	            boolean onSale = rs.getBoolean("onSale");
-	            double discountedPrice = rs.getDouble("discountedPrice");
-	            Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale, discountedPrice);
-	            productList.add(product);
-	        }
+	private List<Product> getAllProducts() throws Exception {
+		List<Product> productList = new ArrayList<>();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+		Statement stmt = con.createStatement();
+		String query = "select * from products;";
+		ResultSet rs = stmt.executeQuery(query);
 
-	        return productList;
-	    }
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String image = rs.getString("image");
+			int categoryId = rs.getInt("categoryid");
+			int quantity = rs.getInt("quantity");
+			int price = rs.getInt("price");
+			int weight = rs.getInt("weight");
+			String description = rs.getString("description");
+			boolean onSale = rs.getBoolean("onSale");
+			double discountedPrice = rs.getDouble("discountedPrice");
+			Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale,
+					discountedPrice);
+			productList.add(product);
+		}
 
-	    @PostMapping("/admin/applyDiscount")
-	    public void applyDiscount(@RequestParam("productId") int productId, @RequestParam("discountRate") double discountRate, HttpServletResponse response) {
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-	            PreparedStatement pst = con.prepareStatement("UPDATE products SET onSale = 1, discountedPrice = price * (1 - ?) WHERE id = ?;");
-	            pst.setBoolean(1, true);
-	            pst.setDouble(2, discountRate / 100);
-	            pst.setInt(3, productId);
-	            int i = pst.executeUpdate();
-	            if (i > 0) {
-	                response.setStatus(HttpServletResponse.SC_OK);
-	            } else {
-	                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	            }
-	        } catch (Exception e) {
-	            System.out.println("Exception: " + e);
-	            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	        }
-	    }
-	
+		return productList;
+	}
+
+	@PostMapping("/admin/applyDiscount")
+	public void applyDiscount(@RequestParam("productId") int productId,
+			@RequestParam("discountRate") double discountRate, @RequestParam("discountedPrice") double discountedPrice,
+			HttpServletResponse response) {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+			PreparedStatement pst = con
+					.prepareStatement("UPDATE products SET onSale = 1, discountedPrice = ? WHERE id = ?;");
+			pst.setDouble(1, discountedPrice);
+			pst.setInt(2, productId);
+			int i = pst.executeUpdate();
+			if (i > 0) {
+				response.setStatus(HttpServletResponse.SC_OK);
+			} else {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/admin/resetDiscount")
+	public String resetDiscount(@RequestParam("productId") int productId, HttpServletResponse response) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+			PreparedStatement pst = con
+					.prepareStatement("UPDATE products SET onSale = 0, discountedPrice = price WHERE id = ?;");
+			pst.setInt(1, productId);
+			int i = pst.executeUpdate();
+			if (i > 0) {
+				response.setStatus(HttpServletResponse.SC_OK);
+				return "redirect:/admin/discount"; 
+			} else {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return null; 
+		}
+	}
 
 }
