@@ -144,6 +144,7 @@
 							int price = rs.getInt("price");
 							String weight = rs.getString("weight");
 							String description = rs.getString("description");
+
 							ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 							rs2.next();
 							String categoryName = rs2.getString("name");
