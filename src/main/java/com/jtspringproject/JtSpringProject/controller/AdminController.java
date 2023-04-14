@@ -42,11 +42,7 @@ public class AdminController {
 		return "userLogin";
 	}
 
-<<<<<<< HEAD
 	@PostMapping(value = "userloginvalidate")	// REQUEST: userloginvalidate ^ (POST)
-=======
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST) // REQUEST: userloginvalidate ^ (POST)
->>>>>>> branch-6-t
 	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
 
@@ -357,13 +353,9 @@ public class AdminController {
 		}
 	}
 
-<<<<<<< HEAD
-	private Product getBestSellingProduct() throws Exception {
-		Product product = null;
-=======
+
 	private List<Product> getAllProducts() throws Exception {
 		List<Product> productList = new ArrayList<>();
->>>>>>> branch-6-t
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
