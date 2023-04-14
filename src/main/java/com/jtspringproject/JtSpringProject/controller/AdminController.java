@@ -10,7 +10,6 @@ import com.mysql.cj.protocol.Resultset;
 
 @Controller
 public class AdminController {
-	int userlogcheck = 1; // to check user
 	int adminlogcheck = 0;
 	String usernameforclass = "";
 
