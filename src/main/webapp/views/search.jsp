@@ -101,13 +101,15 @@
     
     <!-- SEARCH BAR -->
     <div class="container">
-				<div class="input-group my-3">
-			<form method="get">
-				<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
-				<div class="input-group-append">
-					<button class="btn btn-primary" type="submit">Search</button>
-				</div>
-			</form>
+		<div class="input-group my-3 d-flex align-items-center">
+			<form method="get" class="d-flex flex-grow-1">
+		    	<div class="flex-grow-1 mr-2">
+		      		<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
+		    	</div>
+		    	<div class="input-group-append">
+		      		<button class="btn btn-primary" type="submit">Search</button>
+		    	</div>
+		  	</form>
 		</div>
 
 		<table id="resultTable" class="table">
