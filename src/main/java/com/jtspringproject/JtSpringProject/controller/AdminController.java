@@ -351,7 +351,7 @@ public class AdminController {
 
 	private Product getBestSellingProduct() throws Exception {
 		Product product = null;
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
 		String query ="select * from products;";
