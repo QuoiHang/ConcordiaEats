@@ -1,10 +1,6 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+
+import com.mysql.cj.protocol.Resultset;
 
 @Controller
 public class AdminController {
@@ -197,7 +192,7 @@ public class AdminController {
 				model.addAttribute("pid", pid);
 				model.addAttribute("pname", pname);
 				model.addAttribute("pimage", pimage);
-				ResultSet rst2 = stmt.executeQuery("select * from categories where categoryid = " + pcategory + ";");
+				ResultSet rst2 = stmt2.executeQuery("select * from categories where categoryid = " + pcategory + ";");
 				if (rst2.next()) {
 					model.addAttribute("pcategory", rst2.getString(2));
 				}
@@ -362,7 +357,7 @@ public class AdminController {
 
 	private List<Product> getAllProducts() throws Exception {
 		List<Product> productList = new ArrayList<>();
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
 		String query = "select * from products;";
