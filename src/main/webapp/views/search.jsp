@@ -128,49 +128,50 @@
 			</thead>	
 			<tbody>
 				<%
-					if(request.getParameter("keyword")!=null) {
-						String keyword=request.getParameter("keyword");
-						String url = "jdbc:mysql://localhost:3306/springproject";
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection(url, "root", "");
-						Statement stmt = con.createStatement();
-						Statement stmt2 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
-						while (rs.next()) {
-							int id = rs.getInt("id");
-							String name = rs.getString("name");
-							int categoryid = rs.getInt("categoryid");
-							int quantity = rs.getInt("quantity");
-							int price = rs.getInt("price");
-							String weight = rs.getString("weight");
-							String description = rs.getString("description");
-
-							ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
-							rs2.next();
-							String categoryName = rs2.getString("name");
+				if(request.getParameter("keyword")!=null) {
+					String keyword=request.getParameter("keyword");
+					String url = "jdbc:mysql://localhost:3306/springproject";
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection(url, "root", "");
+					Statement stmt = con.createStatement();
+					Statement stmt2 = con.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%' order by name ASC, categoryid ASC, sold DESC");
+					
+					while (rs.next()) {
+						int id = rs.getInt("id");
+						String name = rs.getString("name");
+						int categoryid = rs.getInt("categoryid");
+						int quantity = rs.getInt("quantity");
+						int price = rs.getInt("price");
+						String weight = rs.getString("weight");
+						String description = rs.getString("description");
+	
+						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
+						rs2.next();
+						String categoryName = rs2.getString("name");
 				%>
-							<tr>
-								<td><%= id %></td>
-								<td><%= name %></td>
-								<td><%= categoryName %></td>
-								<td><img src='https://placehold.co/100x100.png' height='100px' width='100px'></td>
-								<td><%= quantity %></td>
-								<td><%= price %></td>
-								<td><%= weight %></td>
-								<td><%= description %></td>
-								<td>
-									<form action="/buy" method="get">
-										<input type="hidden" name="id" value="<%=id%>">
-										<input type="submit" value="Buy" class="btn btn-info btn-lg">
-									</form>
-								</td>
-							</tr>
-						<%
-							}
-						}
-					%>
+				<tr>
+					<td><%= id %></td>
+					<td><%= name %></td>
+					<td><%= categoryName %></td>
+					<td><img src='https://placehold.co/100x100.png' height='100px' width='100px'></td>
+					<td><%= quantity %></td>
+					<td>$ <%= price %></td>
+					<td><%= weight %> g</td>
+					<td><%= description %></td>
+					<td>
+						<form action="/buy" method="get">
+							<input type="hidden" name="id" value="<%= id %>">
+							<input type="submit" value="Buy" class="btn btn-info btn-lg">
+						</form>
+					</td>
+				</tr>
+				<%
+					}
+				}
+				%>
 			</tbody>
-		</table>
+		</table>	
     </div>
     <!-- SEARCH BAR -->
 
