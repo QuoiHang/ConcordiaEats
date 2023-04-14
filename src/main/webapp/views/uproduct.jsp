@@ -122,45 +122,35 @@
 						Connection con = DriverManager.getConnection(url, "root", "");
 						Statement stmt = con.createStatement();
 						Statement stmt2 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("select * from products");
-					%>
-					<%
+						ResultSet rs = stmt.executeQuery("select * from products order by categoryid ASC, sold DESC, name ASC");
+
 					while (rs.next()) {
-					%>
-					<td>
-						<%= rs.getInt(1) %>
-					</td>
-					<td>
-						<%= rs.getString(2) %>
-					</td>
-					<td>
-						<%
-							int categoryid = rs.getInt(4);
-							ResultSet rs2 = stmt2.executeQuery("select * from categories where categoryid = "+categoryid+";");
-							if(rs2.next())
-							{
-								out.print(rs2.getString(2));
-							}
-						%>
+						int id = rs.getInt("id");
+						String name = rs.getString("name");
+						int categoryid = rs.getInt("categoryid");
+						int quantity = rs.getInt("quantity");
+						int price = rs.getInt("price");
+						String weight = rs.getString("weight");
+						String description = rs.getString("description");
 						
+						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
+						rs2.next();
+						String categoryName = rs2.getString("name");
+					%>
+					<td><%= id %></td>
+					<td><%= name %></td>
+					<td>
+						<%= categoryName %>
 					</td>
 					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px">
-					<td>
-						<%= rs.getInt(5) %>
+					<td><%= quantity %></td>
+					<td>$ <%= price %>
 					</td>
-					<td>
-						<%= rs.getInt(6) %>
-					</td>
-					<td>
-						<%= rs.getInt(7) %>
-					</td>
-					<td>
-						<%= rs.getString(8) %>
-					</td>
-
+					<td><%= weight %> g</td>
+					<td><%= description %></td>
 					<td>
 						<form action="/buy" method="get">
-							<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
+							<input type="hidden" name="id" value="<%= id %>">
 							<input type="submit" value="Buy" class="btn btn-info btn-lg">
 						</form>
 					</td>
@@ -174,7 +164,7 @@
 		</table>
 		<%
 		} catch (Exception ex) {
-		out.println("Exception Occurred:: " + ex.getMessage());
+			out.println("Exception Occurred:: " + ex.getMessage());
 		}
 		%>
 	</div>

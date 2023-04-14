@@ -12,6 +12,7 @@ public class Product {
     private double discount;
 
 
+
     public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description) {
         this.id = id;
         this.name = name;
@@ -21,6 +22,7 @@ public class Product {
         this.price = price;
         this.weight = weight;
         this.description = description;
+
     }
 
     public int getId() {
@@ -86,6 +88,8 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    
     // getter and setter
     public double getDiscount() {
         return discount;

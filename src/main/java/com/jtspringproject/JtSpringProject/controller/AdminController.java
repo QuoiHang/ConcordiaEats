@@ -10,7 +10,6 @@ import com.mysql.cj.protocol.Resultset;
 
 @Controller
 public class AdminController {
-	int userlogcheck = 1; // to check user
 	int adminlogcheck = 0;
 	String usernameforclass = "";
 
@@ -351,7 +350,7 @@ public class AdminController {
 
 	private Product getBestSellingProduct() throws Exception {
 		Product product = null;
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
 		String query ="select * from products;";
