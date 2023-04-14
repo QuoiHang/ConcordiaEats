@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2023 at 10:27 AM
+-- Generation Time: Apr 14, 2023 at 05:14 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -131,7 +131,10 @@ INSERT INTO `products` (`id`, `name`, `image`, `categoryid`, `quantity`, `price`
 (3, 'coke', NULL, 5, 100, 4, 400, '', 0, 0, 0),
 (4, 'potato', NULL, 4, 10, 2, 250, '', 0, 0, 5),
 (5, 'noodles', NULL, 1, 40, 12, 800, '', 0, 0, 2),
-(6, 'water', NULL, 5, 100, 2, 500, '', 0, 0, 0);
+(6, 'water', NULL, 5, 100, 2, 500, '', 0, 0, 0),
+(7, 'tomato', NULL, 4, 50, 3, 250, '', 0, 0, 0),
+(8, 'coke zero', NULL, 5, 100, 4, 400, '', 0, 0, 0),
+(9, 'diet coke', NULL, 5, 100, 4, 400, '', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -206,7 +209,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
