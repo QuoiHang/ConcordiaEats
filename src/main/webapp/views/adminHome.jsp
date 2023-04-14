@@ -83,67 +83,70 @@
 	</nav>
 	<br>
 	
-	<div class="jumbotron text-center">
+	<div class="container-fluid my-4 text-center">
 		<h1 class="display-5">Welcome Back:P, Admin</h1>
 		<hr>
 		<p>Manage your data from this Admin Panel</p>
 	</div>
 	
 	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
-
+		<div class="row align-items-stretch">
+			<div class="col-sm pt-4">
+				<div class="card h-100">
 					<div class="card-body text-center">
 						<h4 class="card-title">Categories</h4>
-						<p>---------------------------------------------</p>
-						<p class="card-text">Manage the categories section here.</p>
-						<a href="/admin/categories" class="card-link btn btn-primary">Manage</a>
+						<p class="card-text">Manage the categories section here.</p>	
+					</div>
+					<div class="card-footer">						
+						<a href="/admin/categories" class="card-link btn btn-block">Manage</a>
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
+			<div class="col-sm pt-4">
+				<div class="card h-100">
 					<div class="card-body text-center">
 						<h4 class="card-title">Products</h4>
-						<p>---------------------------------------------</p>
 						<p class="card-text">Manage all the products here.</p>
-						<a href="/admin/products" class="card-link btn btn-primary">Manage</a>
+					</div>
+					<div class="card-footer">
+							<a href="/admin/products" class="card-link btn btn-block">Manage</a>
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
+			<div class="col-sm pt-4">
+				<div class="card h-100">
 					<div class="card-body text-center">
-						<h4 class="card-title">Customers</h4>
-						<p>---------------------------------------------</p>
+						<h4 class="card-title">Customers</h4>			
 						<p class="card-text">Manage all the customer here.</p>
-						<a href="/admin/customers" class="card-link btn btn-primary">Manage</a>
-
+					</div>
+					<div class="card-footer">								
+						<a href="/admin/customers" class="card-link btn btn-block">Manage</a>
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
+			<div class="col-sm pt-4">
+				<div class="card h-100">
 					<div class="card-body text-center">
-						<h4 class="card-title">discount</h4>
-						<p>---------------------------------------------</p>
-						<p class="card-text">manage discounts for products :)</p>
-						<a href="/admin/discount" class="card-link btn btn-primary">Manage :P</a>
+						<h4 class="card-title">Discount</h4>
+						<p class="card-text">Manage discounts for products :)</p>
+					</div>
+					<div class="card-footer">	
+						<a href="/admin/discount" class="card-link btn btn-block">Manage :P</a>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
+			<div class="col-sm pt-4">
+				<div class="card h-100">
 					<div class="card-body text-center">
-						<h4 class="card-title">mostSelling & leastSelling</h4>
-						<p>---------------------------------------------</p>
+						<h4 class="card-title">Most & Least Selling</h4>
 						<p class="card-text">View the most selling and least selling items here.</p>
-						<a href="/admin/products" class="card-link btn btn-primary">View</a>
+					</div>
+					<div class="card-footer">								
+						<a href="/admin/products#most-selling" class="card-link btn btn-block">View</a>
 					</div>
 				</div>
 			</div>

@@ -109,6 +109,7 @@
 						int id = rs.getInt("id");
 						String name = rs.getString("name");
 						int categoryid = rs.getInt("categoryid");
+						String image = rs.getString("image");
 						int quantity = rs.getInt("quantity");
 						int price = rs.getInt("price");
 						String weight = rs.getString("weight");
@@ -123,7 +124,8 @@
 					<td><%= id %></td>
 					<td><%= name %></td>
 					<td><%= categoryid + "-" + categoryName %></td>	
-					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px"></td>
+					<td><img src="<%= image %>" height="100px" width="100px"></td>
+					<!--  <td><img src="https://placehold.co/100x100.png" height="100px" width="100px"></td> -->
 					<td><%= quantity %></td>
 					<td>$ <%= price %></td>
 					<td><%= weight %> g</td>
@@ -154,7 +156,7 @@
 		%>
 		
 		<!-- MOST SELLING -->
-		<table class="table">		
+		<table class="table" id="most-selling">		
 			<h3> Most Selling </h3>	
 			<tr>
 				<th scope="col">Serial No.</th>
@@ -168,26 +170,26 @@
 			<tbody>
 				<tr>
 					<%
-						try {
-							String url2 = "jdbc:mysql://localhost:3306/springproject";
-							Class.forName("com.mysql.cj.jdbc.Driver");
-							Connection con2 = DriverManager.getConnection(url2, "root", "");
-							Statement stmt3 = con2.createStatement();
-							Statement stmt4 = con2.createStatement();
-							ResultSet rs3 = stmt3.executeQuery("select * from products order by sold DESC, categoryid ASC , name ASC");
-							
-						while (rs3.next()) {
-							int id = rs3.getInt("id");
-							String name = rs3.getString("name");
-							int categoryid = rs3.getInt("categoryid");
-							int quantity = rs3.getInt("quantity");
-							int price = rs3.getInt("price");
-							String weight = rs3.getString("weight");
-							String description = rs3.getString("description");
-							
-							ResultSet rs4 = stmt4.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
-							rs4.next();
-							String categoryName = rs4.getString("name");
+					try {
+						String url2 = "jdbc:mysql://localhost:3306/springproject";
+						Class.forName("com.mysql.cj.jdbc.Driver");
+						Connection con2 = DriverManager.getConnection(url2, "root", "");
+						Statement stmt3 = con2.createStatement();
+						Statement stmt4 = con2.createStatement();
+						ResultSet rs3 = stmt3.executeQuery("select * from products order by sold DESC, categoryid ASC , name ASC");
+						
+					while (rs3.next()) {
+						int id = rs3.getInt("id");
+						String name = rs3.getString("name");
+						int categoryid = rs3.getInt("categoryid");
+						int quantity = rs3.getInt("quantity");
+						int price = rs3.getInt("price");
+						String weight = rs3.getString("weight");
+						int sold = rs3.getInt("sold");
+						
+						ResultSet rs4 = stmt4.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
+						rs4.next();
+						String categoryName = rs4.getString("name");
 					%>
 					
 					<td><%= id %></td>
@@ -196,7 +198,7 @@
 					<td><%= quantity %></td>
 					<td>$ <%= price %></td>
 					<td><%= weight %> g</td>
-					<td><%= description %></td>
+					<td><%= sold %></td>
 				</tr>					
 				<%
 				}
@@ -239,7 +241,7 @@
 						int quantity = rs5.getInt("quantity");
 						int price = rs5.getInt("price");
 						String weight = rs5.getString("weight");
-						String description = rs5.getString("description");
+						int sold = rs5.getInt("sold");
 						
 						ResultSet rs6 = stmt6.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 						rs6.next();
@@ -252,7 +254,7 @@
 					<td><%= quantity %></td>
 					<td>$ <%= price %></td>
 					<td><%= weight %> g</td>
-					<td><%= description %></td>			
+					<td><%= sold %></td>			
 				</tr>		
 				<%
 				}

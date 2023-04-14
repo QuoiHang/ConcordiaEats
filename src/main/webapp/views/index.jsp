@@ -146,6 +146,7 @@
                                     </div>
                                     <!--endcontainer-->
                                 </div>
+                                
                                 <!--endcarousel-item-->
                                 <div class="carousel-item">
                                     <div class="container text-center">
@@ -182,6 +183,7 @@
                                     </div>
                                     <!--endcontainer-->
                                 </div>
+                                
                                 <!--endcarousel-item-->
                                 <div class="carousel-item">
                                     <div class="container text-center">
