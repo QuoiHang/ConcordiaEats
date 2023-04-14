@@ -128,6 +128,7 @@
 						int id = rs.getInt("id");
 						String name = rs.getString("name");
 						int categoryid = rs.getInt("categoryid");
+						String image = rs.getString("image");
 						int quantity = rs.getInt("quantity");
 						int price = rs.getInt("price");
 						String weight = rs.getString("weight");
@@ -142,7 +143,8 @@
 					<td>
 						<%= categoryName %>
 					</td>
-					<td><img src="https://placehold.co/100x100.png" height="100px" width="100px">
+					<td><img src="<%= image %>" height="100px" width="100px"></td>
+					<!--  <td><img src="https://placehold.co/100x100.png" height="100px" width="100px"> -->
 					<td><%= quantity %></td>
 					<td>$ <%= price %>
 					</td>

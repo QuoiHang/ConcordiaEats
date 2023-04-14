@@ -1,10 +1,15 @@
 package com.jtspringproject.JtSpringProject.controller;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import com.mysql.cj.protocol.Resultset;
 
@@ -13,7 +18,7 @@ public class AdminController {
 	int adminlogcheck = 0;
 	String usernameforclass = "";
 
-	@RequestMapping(value = { "/", "/logout" })	// REQUEST: /, /logout
+	@RequestMapping(value = { "/", "/logout" }) // REQUEST: /, /logout
 	public String returnIndex() {
 		adminlogcheck = 0;
 		usernameforclass = "";
@@ -186,7 +191,7 @@ public class AdminController {
 				model.addAttribute("pid", pid);
 				model.addAttribute("pname", pname);
 				model.addAttribute("pimage", pimage);
-				ResultSet rst2 = stmt.executeQuery("select * from categories where categoryid = " + pcategory + ";");
+				ResultSet rst2 = stmt2.executeQuery("select * from categories where categoryid = " + pcategory + ";");
 				if (rst2.next()) {
 					model.addAttribute("pcategory", rst2.getString(2));
 				}
@@ -336,27 +341,28 @@ public class AdminController {
 		return "redirect:/index";
 	}
 
-	@GetMapping("/admin/bestdeal")
-	public String getBestDeal(Model model) {
+	@GetMapping("/admin/discount")
+	public String getAllProducts(Model model) {
 		try {
-			Product bestDealProduct = getBestSellingProduct();
-			model.addAttribute("bestDealProduct", bestDealProduct);
-			return "bestdeal";
+			List<Product> productList = getAllProducts();
+			model.addAttribute("productList", productList);
+			return "discount";
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			return "error";
 		}
 	}
 
-	private Product getBestSellingProduct() throws Exception {
-		Product product = null;
+
+	private List<Product> getAllProducts() throws Exception {
+		List<Product> productList = new ArrayList<>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
-		String query ="select * from products;";
+		String query = "select * from products;";
 		ResultSet rs = stmt.executeQuery(query);
 
-		if (rs.next()) {
+		while (rs.next()) {
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
 			String image = rs.getString("image");
@@ -365,10 +371,61 @@ public class AdminController {
 			int price = rs.getInt("price");
 			int weight = rs.getInt("weight");
 			String description = rs.getString("description");
-			product = new Product(id, name, image, categoryId, quantity, price, weight, description);
+			boolean onSale = rs.getBoolean("onSale");
+			double discountedPrice = rs.getDouble("discountedPrice");
+			Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale,
+					discountedPrice);
+			productList.add(product);
 		}
 
-		return product;
+		return productList;
+	}
+
+	@PostMapping("/admin/applyDiscount")
+	public void applyDiscount(@RequestParam("productId") int productId,
+			@RequestParam("discountRate") double discountRate, @RequestParam("discountedPrice") double discountedPrice,
+			HttpServletResponse response) {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+			PreparedStatement pst = con
+					.prepareStatement("UPDATE products SET onSale = 1, discountedPrice = ? WHERE id = ?;");
+			pst.setDouble(1, discountedPrice);
+			pst.setInt(2, productId);
+			int i = pst.executeUpdate();
+			if (i > 0) {
+				response.setStatus(HttpServletResponse.SC_OK);
+			} else {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/admin/resetDiscount")
+	public String resetDiscount(@RequestParam("productId") int productId, HttpServletResponse response) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+			PreparedStatement pst = con
+					.prepareStatement("UPDATE products SET onSale = 0, discountedPrice = price WHERE id = ?;");
+			pst.setInt(1, productId);
+			int i = pst.executeUpdate();
+			if (i > 0) {
+				response.setStatus(HttpServletResponse.SC_OK);
+				return "redirect:/admin/discount"; 
+			} else {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return null; 
+		}
 	}
 
 }

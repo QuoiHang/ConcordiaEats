@@ -9,11 +9,13 @@ public class Product {
     private int price;
     private int weight;
     private String description;
+    private boolean onSale;
+    private double discountedPrice;
     private double discount;
 
+    
 
-
-    public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description) {
+    public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -22,9 +24,9 @@ public class Product {
         this.price = price;
         this.weight = weight;
         this.description = description;
-
+        this.onSale = onSale;
+        this.discountedPrice = discountedPrice;
     }
-
     public int getId() {
         return id;
     }
@@ -88,9 +90,13 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
-    // getter and setter
+    public boolean isOnSale() {
+        return onSale;
+    }
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
+    }
+ // getter and setter
     public double getDiscount() {
         return discount;
     }
@@ -99,8 +105,12 @@ public class Product {
         this.discount = discount;
     }
 
-    // 割引後の価格を計算
+    // discountedPriceのgetterとsetter
     public double getDiscountedPrice() {
-        return price * (1 - discount);
+    	 return discountedPrice;
+    }
+
+    public void setDiscountedPrice(double discountedPrice) {
+        this.discountedPrice = discountedPrice;
     }
 }
