@@ -101,13 +101,15 @@
     
     <!-- SEARCH BAR -->
     <div class="container">
-				<div class="input-group my-3">
-			<form method="get">
-				<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
-				<div class="input-group-append">
-					<button class="btn btn-primary" type="submit">Search</button>
-				</div>
-			</form>
+		<div class="input-group my-3 d-flex align-items-center">
+			<form method="get" class="d-flex flex-grow-1">
+		    	<div class="flex-grow-1 mr-2">
+		      		<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
+		    	</div>
+		    	<div class="input-group-append">
+		      		<button class="btn btn-primary" type="submit">Search</button>
+		    	</div>
+		  	</form>
 		</div>
 
 		<table id="resultTable" class="table">
@@ -123,7 +125,7 @@
 					<th>Description</th>
 					<th>Buy</th>	
 				</tr>
-			</thead>
+			</thead>	
 			<tbody>
 				<%
 					if(request.getParameter("keyword")!=null) {
@@ -135,12 +137,14 @@
 						Statement stmt2 = con.createStatement();
 						ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
 						while (rs.next()) {
+							int id = rs.getInt("id");
 							String name = rs.getString("name");
 							int categoryid = rs.getInt("categoryid");
 							int quantity = rs.getInt("quantity");
 							int price = rs.getInt("price");
 							String weight = rs.getString("weight");
-							int id = rs.getInt("id");
+							String description = rs.getString("description");
+
 							ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 							rs2.next();
 							String categoryName = rs2.getString("name");
@@ -153,14 +157,13 @@
 								<td><%= quantity %></td>
 								<td><%= price %></td>
 								<td><%= weight %></td>
-								<td><%= "" %></td>
+								<td><%= description %></td>
 								<td>
 									<form action="/buy" method="get">
 										<input type="hidden" name="id" value="<%=id%>">
 										<input type="submit" value="Buy" class="btn btn-info btn-lg">
 									</form>
 								</td>
-								<td><%= "" %></td>
 							</tr>
 						<%
 							}
