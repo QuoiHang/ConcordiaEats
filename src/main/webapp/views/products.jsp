@@ -19,19 +19,6 @@
             background-color: #f0f0f0;
         }      
 
-        .btn {
-            background-color: #912338;
-            color: #f0f0f0;
-            border: none;
-        }
-
-        .btn:hover,
-        .btn:focus,
-        .btn:active {
-            background-color: #da3a16;
-            color: #f0f0f0;
-        }
-
         .navbar{
             color: #f0f0f0;
             background-color: #912338;
@@ -80,8 +67,7 @@
 				<ul class="navbar-nav mr-auto"></ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active"><a class="nav-link" href="/adminhome">Home Page</a></li>
-					<li class="nav-item active"><a class="nav-link" href="/admin">Logout</a>
-					</li>
+					<li class="nav-item active"><a class="nav-link" href="/admin">Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -132,8 +118,8 @@
 						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 						rs2.next();
 						String categoryName = rs2.getString("name");						
-						
 					%>
+					
 					<td><%= id %></td>
 					<td><%= name %></td>
 					<td><%= categoryid + "-" + categoryName %></td>	
@@ -203,6 +189,7 @@
 							rs4.next();
 							String categoryName = rs4.getString("name");
 					%>
+					
 					<td><%= id %></td>
 					<td><%= name %></td>
 					<td><%= categoryid + "-" + categoryName %></td>					
@@ -258,6 +245,7 @@
 						rs6.next();
 						String categoryName = rs6.getString("name");
 					%>
+					
 					<td><%= id %></td>		
 					<td><%= name %></td>
 					<td><%= categoryid + "-" + categoryName %>	</td>
@@ -278,16 +266,9 @@
 		%>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
