@@ -43,7 +43,9 @@
 
 			</div>
 		</div>
-	</nav><br>
+	</nav>
+	<br>
+	
 	<div class="container-fluid">
 
 		<a style="margin: 20px 0" class="btn btn-primary"
@@ -99,7 +101,7 @@
 					<td>
 						<%= rs.getInt(5) %>
 					</td>
-					<td>S
+					<td>$
 						<%= rs.getInt(6) %>
 					</td>
 					<td>
@@ -134,11 +136,14 @@
 		out.println("Exception Occurred:: " + ex.getMessage());
 		}
 		%>
+		
+		<!-- MOST SELLING -->
 		<table class="table">		
 				<h3> Most Selling </h3>	
 			<tr>
 				<th scope="col">Serial No.</th>
 				<th scope="col">Product Name</th>
+				<th scope="col">Category</th>
 				<th scope="col">Quantity</th>
 				<th scope="col">Price</th>
 				<th scope="col">Weight</th>
@@ -148,37 +153,47 @@
 					<tr>
 						<%
 					try {
-						String url1 = "jdbc:mysql://localhost:3306/springproject";
+						String url2 = "jdbc:mysql://localhost:3306/springproject";
 						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con1 = DriverManager.getConnection(url1, "root", "");
-						Statement stmt1 = con1.createStatement();
-						ResultSet rs1 = stmt1.executeQuery("select * from products order by sold DESC, categoryid ASC , name ASC");
+						Connection con2 = DriverManager.getConnection(url2, "root", "");
+						Statement stmt3 = con2.createStatement();
+						Statement stmt4 = con2.createStatement();
+						ResultSet rs3 = stmt3.executeQuery("select * from products order by sold DESC, categoryid ASC , name ASC");
 						%>
 					<%
-					while (rs1.next()) {
+					while (rs3.next()) {
 					%>
 					<td>
-						<%= rs1.getInt(1) %>
+						<%= rs3.getInt(1) %>
 					</td>
 					
 					<td>
-						<%= rs1.getString(2) %>
+						<%= rs3.getString(2) %>
 					</td>
-					
 					<td>
-						<%= rs1.getInt(5) %>
+						<%
+							int categoryid = rs3.getInt(4);
+							ResultSet rs4 = stmt4.executeQuery("select * from categories where categoryid = "+categoryid+";");
+							if(rs4.next())
+							{
+								out.print(rs4.getString(2));
+							}
+						%>	
+					</td>					
+					<td>
+						<%= rs3.getInt(5) %>
 					</td>
 
 					<td>
-						<%= rs1.getInt(6) %>
+						<%= rs3.getInt(6) %>
 					</td> 
 					
 					<td>
-						<%= rs1.getInt(7) %>
+						<%= rs3.getInt(7) %>
 					</td>
 					
 					<td>
-						<%= rs1.getInt(11) %>
+						<%= rs3.getInt(11) %>
 					</td>
 					</tr>					
 				<%
@@ -191,11 +206,14 @@
 		out.println("Exception Occurred:: " + ex.getMessage());
 		}
 		%>
+		
+		<!-- LEAST SELLING -->
 		<table class="table">		
 				<h3> Least Selling </h3>	
 				<tr>
 				<th scope="col">Serial No.</th>
 				<th scope="col">Product Name</th>
+				<th scope="col">Category</th>
 				<th scope="col">Quantity</th>
 				<th scope="col">Price</th>
 				<th scope="col">Weight</th>
@@ -205,10 +223,11 @@
 					<tr>
 						<%
 					try {
-						String url5 = "jdbc:mysql://localhost:3306/springproject";
+						String url3 = "jdbc:mysql://localhost:3306/springproject";
 						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con5 = DriverManager.getConnection(url5, "root", "");
-						Statement stmt5 = con5.createStatement();
+						Connection con3 = DriverManager.getConnection(url3, "root", "");
+						Statement stmt5 = con3.createStatement();
+						Statement stmt6 = con3.createStatement();
 						ResultSet rs5 = stmt5.executeQuery("select * from products order by sold ASC, categoryid ASC, name ASC");
 						%>		
 					<%
@@ -220,7 +239,16 @@
 					<td>
 						<%= rs5.getString(2) %>
 					</td>
-					
+					<td>
+						<%
+							int categoryid = rs5.getInt(4);
+							ResultSet rs6 = stmt6.executeQuery("select * from categories where categoryid = "+categoryid+";");
+							if(rs6.next())
+							{
+								out.print(rs6.getString(2));
+							}
+						%>	
+					</td>
 					<td>
 						<%= rs5.getInt(5) %>
 					</td>
