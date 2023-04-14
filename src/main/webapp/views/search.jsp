@@ -125,7 +125,7 @@
 					<th>Description</th>
 					<th>Buy</th>	
 				</tr>
-			</thead>
+			</thead>	
 			<tbody>
 				<%
 					if(request.getParameter("keyword")!=null) {
@@ -137,12 +137,13 @@
 						Statement stmt2 = con.createStatement();
 						ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%'");
 						while (rs.next()) {
+							int id = rs.getInt("id");
 							String name = rs.getString("name");
 							int categoryid = rs.getInt("categoryid");
 							int quantity = rs.getInt("quantity");
 							int price = rs.getInt("price");
 							String weight = rs.getString("weight");
-							int id = rs.getInt("id");
+							String description = rs.getString("description");
 							ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 							rs2.next();
 							String categoryName = rs2.getString("name");
@@ -155,14 +156,13 @@
 								<td><%= quantity %></td>
 								<td><%= price %></td>
 								<td><%= weight %></td>
-								<td><%= "" %></td>
+								<td><%= description %></td>
 								<td>
 									<form action="/buy" method="get">
 										<input type="hidden" name="id" value="<%=id%>">
 										<input type="submit" value="Buy" class="btn btn-info btn-lg">
 									</form>
 								</td>
-								<td><%= "" %></td>
 							</tr>
 						<%
 							}
