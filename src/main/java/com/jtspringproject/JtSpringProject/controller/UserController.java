@@ -48,6 +48,12 @@ public class UserController {
 	public String getproduct(Model model) {
 		return "uproduct";
 	}
+	
+	// direct to '/buy'
+	@GetMapping("/search")
+	public String search() {
+		return "search";
+	}
 
 	// direct to '/buy'
 	@GetMapping("/buy")
@@ -59,5 +65,15 @@ public class UserController {
 	@GetMapping("/contact")
 	public String contact() {
 		return "contact";
+	}
+	
+	@GetMapping("/favorites")
+	public String favorites() {
+		return "favorites";
+	}
+	
+	@GetMapping("/cart")
+	public String cart() {
+		return "cart";
 	}
 }
