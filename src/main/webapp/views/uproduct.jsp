@@ -1,6 +1,9 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -120,83 +123,46 @@
 				<th scope="col"></th>	
 			</tr>
 			<tbody>
-				<tr>
-					<%
-					try {
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-						Statement stmt = con.createStatement();
-						Statement stmt2 = con.createStatement();
-						Statement stmt3 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("select * from products order by categoryid ASC, name ASC");
+				<c:forEach items="${productList}" var="product">
+					<tr>
+						<td>${product.id}</td>
+						<td>${product.name}</td>
+						<td><img src="${product.image}" height="100px" width="100px"></td>
+						<td>${product.categoryName}</td>
+						<td>${product.quantity}</td>
+						<td>$ ${product.onSale ? product.discountedPrice : product.price}</td>
+						<td>${product.weight} g</td>
+						<td>${product.description}</td>
 						
-						// Get userid from model
-						String userid = (String) request.getAttribute("userid");						
+						<td>
 						
-					while (rs.next()) {
-						int id = rs.getInt("id");
-						String name = rs.getString("name");
-						int categoryid = rs.getInt("categoryid");
-						String image = rs.getString("image");
-						int quantity = rs.getInt("quantity");
-						int price = rs.getInt("price");
-						String weight = rs.getString("weight");
-						String description = rs.getString("description");
+							<form action="/like" method="post">
+								<input type="hidden" name="productId" value="${product.id}" />
+								<button type="submit" class="btn" style="color: #912338; background: none; border: none;"><i id="likeButton${product.id}" class="far fa-heart fa-lg"></i></button>
+							</form>
+							
+							<script>
+						        var likeButton${product.id} = document.getElementById("likeButton${product.id}");
+						        likeButton${product.id}.addEventListener("click", function() {
+						            var isLiked = likeButton${product.id}.classList.contains("fas");
+						            if (isLiked) {
+						            	likeButton${product.id}.classList.remove("far");
+						                likeButton${product.id}.classList.add("fas");
+						            }
+						        });
+						    </script>							
+						</td>
 						
-						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
-						rs2.next();
-						String categoryName = rs2.getString("name");
-						
-						ResultSet rs3 = stmt3.executeQuery("SELECT * FROM favorites WHERE user_id = " + userid + " AND product_id = " + id);
-						Boolean isLiked = rs3.next();
-						
-						PreparedStatement stmtAjax = null;
-					%>
-					<td><%= id %></td>
-					<td><%= name %></td>
-					<td><%= categoryName %></td>
-					<td><img src="<%= image %>" height="100px" width="100px"></td>
-					<td><%= quantity %></td>
-					<td>$ <%= price %></td>
-					<td><%= weight %> g</td>
-					<td><%= description %></td>
-					
-					<td>
-						<i id="likeButton<%=id%>" class="<% if (isLiked) { %>fas<% } else { %>far<% } %> fa-heart" style="color: #912338"></i>				
-						
-						<script>
-					        var likeButton<%=id%> = document.getElementById("likeButton<%=id%>");
-					        likeButton<%=id%>.addEventListener("click", function() {
-					            var isLiked = likeButton<%=id%>.classList.contains("fas");
-					            if (isLiked) {
-					                likeButton<%=id%>.classList.remove("fas");
-					                likeButton<%=id%>.classList.add("far");
-					            } else {
-					                likeButton<%=id%>.classList.remove("far");
-					                likeButton<%=id%>.classList.add("fas");
-					            }
-					        });
-					    </script>
-					</td>
-					
-					<!-- TODO -->
-					<td>
-						<form action="/buy" method="post">
-							<input type="hidden" name="id" value="<%= id %>">
-							<input type="submit" value="Add to Cart" class="btn btn-info btn-lg">
-						</form>
-					</td>
-				</tr>
-				<%
-				}
-				%>
+						<td>
+							<form action="/add" method="post">
+								<input type="hidden" name="id" value="${product.id}">
+								<input type="submit" value="Add to Cart" class="btn btn-info btn-lg">
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-		<%
-		} catch (Exception ex) {
-			out.println("Exception Occurred:: " + ex.getMessage());
-		}
-		%>
 	</div>
 	<!-- CATAGORIES -->
 

@@ -358,6 +358,7 @@ public class AdminController {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		Statement stmt = con.createStatement();
+		Statement stmt2 = con.createStatement();
 		String query = "select * from products;";
 		ResultSet rs = stmt.executeQuery(query);
 
@@ -365,7 +366,12 @@ public class AdminController {
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
 			String image = rs.getString("image");
+			
 			int categoryId = rs.getInt("categoryid");
+			ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryId);
+			rs2.next();
+			String categoryName = rs2.getString("name");
+			
 			int quantity = rs.getInt("quantity");
 			int price = rs.getInt("price");
 			int weight = rs.getInt("weight");
@@ -373,7 +379,8 @@ public class AdminController {
 			boolean onSale = rs.getBoolean("onSale");
 			double discountedPrice = rs.getDouble("discountedPrice");
 			int sold = rs.getInt("sold");
-			Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale,
+			
+			Product product = new Product(id, name, image, categoryId, categoryName, quantity, price, weight, description, onSale,
 					discountedPrice, sold);
 			productList.add(product);
 		}
