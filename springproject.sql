@@ -126,7 +126,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `categoryid`, `quantity`, `price`, `weight`, `description`, `onSale`, `discountedPrice`, `sold`) VALUES
-(1, 'apple', 'https://cdn.shopify.com/s/files/1/0511/1752/3094/products/image_789592d7-be6f-4caf-a2a6-9c3715937ae5.jpg?v=1604733824', 3, 50, 3, 250, 'red python', 1, 2.4000000000000004, 10),
+(1, 'apple', 'https://cdn.shopify.com/s/files/1/0511/1752/3094/products/image_789592d7-be6f-4caf-a2a6-9c3715937ae5.jpg?v=1604733824', 3, 50, 3, 250, 'red python', 0, 0, 10),
 (2, 'burger', 'https://www.montrealcentreville.ca/wp-content/uploads/2021/01/90436778_213897623017932_1430014141154102499_n-1024x1024.jpg', 1, 255, 6, 200, '', 0, 0, 0),
 (3, 'coke', 'https://cdn.shopify.com/s/files/1/0387/6382/3235/products/alp-m000000000674620-1.jpg?v=1589497937', 5, 100, 4, 400, '', 0, 0, 0),
 (4, 'potato', 'https://m.media-amazon.com/images/I/313dtY-LOEL._SX522_.jpg', 4, 10, 2, 250, '', 0, 0, 5),
