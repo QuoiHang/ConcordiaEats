@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
@@ -100,10 +101,45 @@
     <!-- NAV -->
 
 	<div class="container-fluid">
-		<table class="table">
-
-		</table>
+		<table class="table" id="cartTable">
+    		<thead>
+	      		<tr>
+			        <th>Product Name</th>
+			        <th>Price</th>
+			        <th>Quantity</th>
+			        <th>Total</th>
+			        <th></th>
+	      		</tr>
+    		</thead>
+    		<tbody>
+    		<!-- Example row with + and - buttons -->
+			    <tr>
+				    <td>Example Product</td>
+				    <td>$10.00</td>
+				    <td>
+				        <button class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
+				        <span class="mx-2" id="quantity">1</span>
+				        <button class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
+				    </td>
+				    <td>$10.00</td>
+				    <td>
+				    	<button class="btn btn-danger" onclick="removeFromCart()" title="Remove">
+				    	<i class="fas fa-trash-alt"></i>
+				    	 </button>
+				    </td>
+			  	</tr>
+    		</tbody>
+  		</table>
+	  	<div class="text-right">
+	    	<h5>Total: <span id="cartTotal">$0.00</span></h5>
+	  	</div>
+	  	<div class="text-right">
+	    	<button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+	  	</div>
 	</div>
+	
+			</table>
+		</div>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
