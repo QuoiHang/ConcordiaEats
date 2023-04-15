@@ -62,7 +62,7 @@
         <div class="container-fluid">
             <div class="d-flex">
                 <img th:src="@{/images/ConcordiaEats-Logo-BW.svg}" src="/images/ConcordiaEats-Logo-BW.svg" width="auto" height="40"/>
-                <h4 class="my-auto">&nbsp;Welcome ${ username } </h4>
+                <h4 class="my-auto">&nbsp;Welcome ${ userid } ${ username } </h4>
             </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -77,7 +77,7 @@
                         <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/Search}" href="/search">Search</a>
+                        <a class="nav-link" th:href="@{/search}" href="/search">Search</a>
                     </li>                         
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/favorites}" href="/favorites">Favorites</a>

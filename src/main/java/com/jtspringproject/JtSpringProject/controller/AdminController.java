@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 
 import com.mysql.cj.protocol.Resultset;
 
@@ -17,6 +17,7 @@ import com.mysql.cj.protocol.Resultset;
 public class AdminController {
 	int adminlogcheck = 0;
 	String usernameforclass = "";
+	int userid;
 
 	@RequestMapping(value = { "/", "/logout" }) // REQUEST: /, /logout
 	public String returnIndex() {
@@ -26,23 +27,24 @@ public class AdminController {
 	}
 
 	@GetMapping("/index")
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		if (usernameforclass.equalsIgnoreCase(""))
 			return "userLogin";
 		else {
+			session.setAttribute("username", usernameforclass);
+	        session.setAttribute("userid", userid);
 			model.addAttribute("username", usernameforclass);
+			model.addAttribute("userid", userid);
 			return "index";
 		}
-
 	}
 
 	@GetMapping("/userloginvalidate")
 	public String userlog(Model model) {
-
 		return "userLogin";
 	}
 
-	@PostMapping(value = "userloginvalidate")	// REQUEST: userloginvalidate ^ (POST)
+	@PostMapping(value = "userloginvalidate")
 	public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass,
 			Model model) {
 
@@ -54,6 +56,8 @@ public class AdminController {
 					"select * from users where username = '" + username + "' and password = '" + pass + "' ;");
 			if (rst.next()) {
 				usernameforclass = rst.getString(2);
+				// Add user id into model
+				userid = rst.getInt(1);
 				return "redirect:/index";
 			} else {
 				model.addAttribute("message", "Invalid Username or Password");
@@ -64,12 +68,10 @@ public class AdminController {
 			System.out.println("Exception:" + e);
 		}
 		return "userLogin";
-
 	}
 
 	@GetMapping("/admin")
 	public String adminlogin(Model model) {
-
 		return "adminlogin";
 	}
 
@@ -83,7 +85,6 @@ public class AdminController {
 
 	@GetMapping("/loginvalidate")
 	public String adminlog(Model model) {
-
 		return "adminlogin";
 	}
 
@@ -330,8 +331,6 @@ public class AdminController {
 			pst.setString(1, username);
 			pst.setString(2, email);
 			pst.setString(3, password);
-			// pst.setString(4, address);
-			// changed below 5 to 4 as is
 			pst.setInt(4, userid);
 			int i = pst.executeUpdate();
 			usernameforclass = username;
