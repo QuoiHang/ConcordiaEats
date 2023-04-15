@@ -1,14 +1,12 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -43,19 +41,38 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	// direct to '/user/products' -> user product -> uproduct
 	@GetMapping("/user/products")
-	public String getproduct(Model model) {
-		return "uproduct";
+	public String getproduct(Model model, HttpSession session) {
+	    String username = (String) session.getAttribute("username");
+	    Integer useridObj = (Integer) session.getAttribute("userid");
+	    String userid = useridObj.toString();
+	    model.addAttribute("username", username);
+	    model.addAttribute("userid", userid);
+	    
+	    return "uproduct";
 	}
+
 	
-	// direct to '/buy'
 	@GetMapping("/search")
 	public String search() {
 		return "search";
 	}
 
-	// direct to '/buy'
+	@PostMapping("/like")
+	public String like(@RequestParam("pid") int id, Model model) {
+		return "like";
+	}
+	
+	@PostMapping("/unlike")
+	public String unlike(@RequestParam("pid") int id, Model model) {
+		return "unlike";
+	}
+	
+	@PostMapping("/add")
+	public String add(@RequestParam("pid") int id, Model model) {
+		return "add";
+	}
+	
 	@GetMapping("/buy")
 	public String buy() {
 		return "buy";
@@ -68,7 +85,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/favorites")
-	public String favorites() {
+	public String favorites(Model model, HttpSession session) {
+	    String username = (String) session.getAttribute("username");
+	    Integer useridObj = (Integer) session.getAttribute("userid");
+	    String userid = useridObj.toString();
+	    model.addAttribute("username", username);
+	    model.addAttribute("userid", userid);		
+	    
 		return "favorites";
 	}
 	
