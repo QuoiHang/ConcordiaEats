@@ -12,10 +12,9 @@ public class Product {
     private boolean onSale;
     private double discountedPrice;
     private double discount;
+    private int sold;
 
-    
-
-    public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice) {
+    public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice, int sold) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -26,6 +25,7 @@ public class Product {
         this.description = description;
         this.onSale = onSale;
         this.discountedPrice = discountedPrice;
+        this.sold = sold;
     }
     public int getId() {
         return id;
@@ -90,13 +90,14 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+    
     public boolean isOnSale() {
         return onSale;
     }
     public void setOnSale(boolean onSale) {
         this.onSale = onSale;
     }
- // getter and setter
+    
     public double getDiscount() {
         return discount;
     }
@@ -112,5 +113,13 @@ public class Product {
 
     public void setDiscountedPrice(double discountedPrice) {
         this.discountedPrice = discountedPrice;
+    }
+    
+    public int getSold() {
+        return sold;
+    }
+    
+    public void setSold(int num) {
+        this.sold = this.sold + num;
     }
 }

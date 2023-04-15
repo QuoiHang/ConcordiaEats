@@ -372,8 +372,9 @@ public class AdminController {
 			String description = rs.getString("description");
 			boolean onSale = rs.getBoolean("onSale");
 			double discountedPrice = rs.getDouble("discountedPrice");
+			int sold = rs.getInt("sold");
 			Product product = new Product(id, name, image, categoryId, quantity, price, weight, description, onSale,
-					discountedPrice);
+					discountedPrice, sold);
 			productList.add(product);
 		}
 

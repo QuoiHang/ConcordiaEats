@@ -105,6 +105,7 @@
 				<tr>
 					<th>Product Name</th>
 					<th>Original Price</th>
+					<th>Sold</th>
 					<th>Discount</th>
 					<th>Discounted Price</th>
 					<th>Discount Rate</th>
@@ -119,6 +120,7 @@
 					<tr>
 						<td>${product.name}</td>
 						<td id="price-${product.id}">${product.price}</td>
+						<td>${product.sold}</td>
 						<td><fmt:formatNumber value="${product.onSale ? (1 - (product.discountedPrice / product.price)) * 100 : 0}" maxFractionDigits="0"/>%</td>
 						<td><fmt:formatNumber value="${product.discountedPrice}" maxFractionDigits="0" /></td>
 						<td>

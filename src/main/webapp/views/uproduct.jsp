@@ -123,9 +123,8 @@
 				<tr>
 					<%
 					try {
-						String url = "jdbc:mysql://localhost:3306/springproject";
 						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection(url, "root", "");
+						Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 						Statement stmt = con.createStatement();
 						Statement stmt2 = con.createStatement();
 						Statement stmt3 = con.createStatement();
@@ -147,12 +146,15 @@
 						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
 						rs2.next();
 						String categoryName = rs2.getString("name");
+						
+						ResultSet rs3 = stmt3.executeQuery("SELECT * FROM favorites WHERE user_id = " + userid + " AND product_id = " + id);
+						Boolean isLiked = rs3.next();
+						
+						PreparedStatement stmtAjax = null;
 					%>
 					<td><%= id %></td>
 					<td><%= name %></td>
-					<td>
-						<%= categoryName %>
-					</td>
+					<td><%= categoryName %></td>
 					<td><img src="<%= image %>" height="100px" width="100px"></td>
 					<td><%= quantity %></td>
 					<td>$ <%= price %></td>
@@ -160,10 +162,6 @@
 					<td><%= description %></td>
 					
 					<td>
-					<% 
-						ResultSet rs3 = stmt3.executeQuery("SELECT * FROM favorites WHERE user_id = " + userid + " AND product_id = " + id);
-						Boolean isLiked = rs3.next();
-					%>
 						<i id="likeButton<%=id%>" class="<% if (isLiked) { %>fas<% } else { %>far<% } %> fa-heart" style="color: #912338"></i>				
 						
 						<script>
@@ -179,7 +177,6 @@
 					            }
 					        });
 					    </script>
-						
 					</td>
 					
 					<!-- TODO -->
