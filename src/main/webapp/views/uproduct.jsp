@@ -56,6 +56,8 @@
             color: #f0f0f0;
         }
     </style>
+
+	
     <title>Categories</title>
 </head>
 
@@ -160,18 +162,24 @@
 					<td>
 					<% 
 						ResultSet rs3 = stmt3.executeQuery("SELECT * FROM favorites WHERE user_id = " + userid + " AND product_id = " + id);
-						Boolean isLiked = false;
-						
-						if (rs3.next()){
-							isLiked = true;
-						}
-							
-						if (isLiked)  {
+						Boolean isLiked = rs3.next();
 					%>
-							<i class="fas fa-heart" style="color: #912338"></i>
-					<% } else { %>
-							<i class="far fa-heart" style="color: #912338"></i>
-					<% } %>					
+						<i id="likeButton<%=id%>" class="<% if (isLiked) { %>fas<% } else { %>far<% } %> fa-heart" style="color: #912338"></i>				
+						
+						<script>
+					        var likeButton<%=id%> = document.getElementById("likeButton<%=id%>");
+					        likeButton<%=id%>.addEventListener("click", function() {
+					            var isLiked = likeButton<%=id%>.classList.contains("fas");
+					            if (isLiked) {
+					                likeButton<%=id%>.classList.remove("fas");
+					                likeButton<%=id%>.classList.add("far");
+					            } else {
+					                likeButton<%=id%>.classList.remove("far");
+					                likeButton<%=id%>.classList.add("fas");
+					            }
+					        });
+					    </script>
+						
 					</td>
 					
 					<!-- TODO -->

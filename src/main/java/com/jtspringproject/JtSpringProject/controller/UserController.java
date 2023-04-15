@@ -96,7 +96,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/cart")
-	public String cart() {
+	public String cart(Model model, HttpSession session) {
+	    String username = (String) session.getAttribute("username");
+	    Integer useridObj = (Integer) session.getAttribute("userid");
+	    String userid = useridObj.toString();
+	    model.addAttribute("username", username);
+	    model.addAttribute("userid", userid);	
+	    
 		return "cart";
 	}
 }
