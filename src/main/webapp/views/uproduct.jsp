@@ -135,7 +135,7 @@
 						<td>${product.description}</td>
 						
 						<td>
-							<form action="/like" method="post">
+							<form action="/unlike" method="post">
 								<input type="hidden" name="productId" value="${product.id}" />
 								<!--  <input type="hidden" name="likeAction" value="${ product.liked > 0 ? 'unlike' : 'like'}" />-->
 								<button type="submit" class="btn" style="color: #912338; background: none; border: none;"><i id="likeButton${product.id}" class="${ product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i></button>

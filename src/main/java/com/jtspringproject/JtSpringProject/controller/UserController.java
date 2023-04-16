@@ -156,7 +156,7 @@ public class UserController {
 				
 				if (i > 0) {
 					response.setStatus(HttpServletResponse.SC_OK);
-					return null; 
+					return "redirect:/user/products"; 
 				} else {
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 					return null;
@@ -182,7 +182,7 @@ public class UserController {
 				
 				if (i > 0) {
 					response.setStatus(HttpServletResponse.SC_OK);
-					return null;
+					return "redirect:/user/products";
 				} else {
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 					return null;
