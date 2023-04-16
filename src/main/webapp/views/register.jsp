@@ -44,11 +44,15 @@
                     <input type="checkbox" onclick="showPassword()">Show Password
 
                 </div>
-                <div class="form-group">
+                
+                <!--  Address is not logged into database -->
+                <!-- <div class="form-group">
                     <label for="Address">Address</label>
                     <textarea class="form-control form-control-lg" rows="3" placeholder="Enter Your Address"
                         name="address"></textarea>
-                </div>
+                </div> -->
+                <!--  Leave out address at the moment -->
+                
                 <span style="margin-top: 10px">Already have an account <a class="linkControl" href="index">Login
                         here</a></span> <br><br>
                 <input type="submit" value="Register" class="btn btn-primary btn-block"><br>

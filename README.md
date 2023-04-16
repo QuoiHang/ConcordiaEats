@@ -1,6 +1,9 @@
 # ConcordiaEats
 
-*Updated: 2023-4-1*
+*Updated: 2023-4-16*
+
+Formatted MVC is on the repo of Mengyang.
+Merging into formatted version is underway.
 
 ## branch-1 is available to work on. Feel free to branch from branch-1.
 
@@ -10,6 +13,8 @@
 ### Primary Colors:
 
 Burgundy: #912338 ![#912338](https://placehold.co/15x15/912338/912338/png)
+
+Yellow: #e5a712 ![#da3a16](https://placehold.co/15x15/e5a712/e5a712/png)
 
 Orange: #da3a16 ![#da3a16](https://placehold.co/15x15/da3a16/da3a16/png)
 
