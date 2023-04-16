@@ -1,6 +1,11 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.*" %>
+<% 
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+%>
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
