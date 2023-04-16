@@ -5,6 +5,7 @@ public class Product {
     private String name;
     private String image;
     private int categoryId;
+    private String categoryName;
     private int quantity;
     private int price;
     private int weight;
@@ -12,21 +13,30 @@ public class Product {
     private boolean onSale;
     private double discountedPrice;
     private double discount;
+    private int sold;
+    private int liked;
 
-    
-
-    public Product(int id, String name, String image, int categoryId, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice) {
+    public Product(int id, String name, String image, int categoryId, String categoryName, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice, int sold) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.quantity = quantity;
         this.price = price;
         this.weight = weight;
         this.description = description;
         this.onSale = onSale;
         this.discountedPrice = discountedPrice;
+        this.sold = sold;
     }
+    
+    public Product(int id, String name, String image, int categoryId, String categoryName, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice, int sold, int liked) {
+        this(id, name, image, categoryId, categoryName, quantity, price, weight, description, onSale, discountedPrice, sold);
+        this.liked = liked;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -57,6 +67,14 @@ public class Product {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+    
+    public int getCategoryName() {
+        return categoryId;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public int getQuantity() {
@@ -90,13 +108,14 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+    
     public boolean isOnSale() {
         return onSale;
     }
     public void setOnSale(boolean onSale) {
         this.onSale = onSale;
     }
- // getter and setter
+    
     public double getDiscount() {
         return discount;
     }
@@ -112,5 +131,21 @@ public class Product {
 
     public void setDiscountedPrice(double discountedPrice) {
         this.discountedPrice = discountedPrice;
+    }
+    
+    public int getSold() {
+        return sold;
+    }
+    
+    public void setSold(int num) {
+        this.sold = this.sold + num;
+    }
+    
+    public int getLiked() {
+        return liked;
+    }
+    
+    public void setLiked(int num) {
+        this.liked = num;
     }
 }
