@@ -145,9 +145,9 @@
 						</td>
 						
 						<td>
-							<form action="/add" method="post">
-								<input type="hidden" name="id" value="${product.id}">
-								<input type="submit" value="Add to Cart" class="btn btn-info btn-lg">
+							<form class="add-to-cart-form">
+							    <input type="hidden" name="id" value="${product.id}">
+							    <button type="button" class="btn btn-info btn-lg add-to-cart-button">Add to Cart</button>
 							</form>
 						</td>
 					</tr>
@@ -183,6 +183,46 @@
 		    });
 		});
 	</script>
+	<script>
+		$(document).ready(function() {
+		    $(".add-to-cart-form").submit(function(event) {
+		        event.preventDefault(); // prevent the form from submitting normally
+		        var formData = $(this).serialize(); // get the form data
+		        var $addToCartButton = $(this).find(".add-to-cart-button"); // get the add to cart button that was clicked
+		        $.ajax({
+		            url: "/addToCart",
+		            type: "POST",
+		            data: formData,
+		            dataType: "json",
+		            success: function(response) {
+		                // Update the add to cart button based on the response
+		                if (response.added) {
+		                    $addToCartButton.text("Added to Cart"); // change the text on the add to cart button to indicate that the product has been added
+		                    $addToCartButton.prop("disabled", true); // disable the add to cart button to prevent adding the same product multiple times
+		                    // Update the cart total
+		                    $.ajax({
+		                        url: "/cart-total",
+		                        type: "GET",
+		                        dataType: "json",
+		                        success: function(response) {
+		                            $("#cart-total").text(response.total);
+		                        },
+		                        error: function(xhr, status, error) {
+		                            console.error("Error:", error);
+		                        }
+		                    });
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error:", error);
+		            }
+		        });
+		    });
+		});
+	</script>
+
+
+	
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
