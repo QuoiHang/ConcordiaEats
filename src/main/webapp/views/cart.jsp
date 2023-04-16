@@ -1,6 +1,11 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.*" %>
+<% 
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+%>
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -9,7 +14,8 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
 	<style>
@@ -98,16 +104,146 @@
         </div>
     </nav>
     <!-- NAV -->
-
 	<div class="container-fluid">
-		<table class="table">
+        <table class="table" id="cartTable">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                int userId = 1; // Replace this with the actual user ID of the logged-in user
+                try {
+                    String url = "jdbc:mysql://localhost:3306/springproject";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection(url, "root", "");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT p.id as product_id, p.name as product_name, p.price as product_price, c.quantity as quantity FROM products p JOIN cart c ON p.id = c.product_id WHERE c.user_id = " + userId);
 
+                    while (rs.next()) {
+                        int productId = rs.getInt("product_id");
+                        String productName = rs.getString("product_name");
+                        int productPrice = rs.getInt("product_price");
+                        int quantity = rs.getInt("quantity");
+                %>
+                <tr>
+                    <td data-product-id="<%= productId %>"><%= productName %></td>
+                    <td>$<%= productPrice %>.00</td>
+                    <td>
+                        <button class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
+                        <span class="mx-2 quantity"><%= quantity %></span>
+                        <button class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
+                    </td>
+                    <td>$<%= productPrice * quantity %>.00</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removeFromCart()" title="Remove">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                <%
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                %>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h5>Total: <span id="cartTotal">$0.00</span></h5>
+        </div>
+        <div class="text-right">
+            <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+        </div>
+    </div>	
 		</table>
-	</div>
+		</div>
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script>
+	  let userId = 1; // Replace this with the actual user ID of the logged-in user
+	
+	  function updateQuantityInDatabase(userId, productId, quantity) {
+	    $.post("/updateCartItem", { userId: userId, productId: productId, quantity: quantity })
+	      .done(function (data) {
+	        console.log("Quantity updated successfully");
+	      })
+	      .fail(function () {
+	        console.error("Error updating quantity");
+	      });
+	  }
+	
+	  function deleteItemFromDatabase(userId, productId) {
+	    $.post("/deleteCartItem", { userId: userId, productId: productId })
+	      .done(function (data) {
+	        console.log("Item deleted successfully");
+	      })
+	      .fail(function () {
+	        console.error("Error deleting item");
+	      });
+	  }
+	
+	  function increaseQuantity() {
+	    const row = document.querySelector('#cartTable tbody tr');
+	    const quantityElement = row.querySelector('.quantity');
+	    let currentQuantity = parseInt(quantityElement.textContent);
+	    currentQuantity += 1;
+	    quantityElement.textContent = currentQuantity;
+	    updateTotal();
+	    let productId = parseInt(row.cells[0].getAttribute("data-product-id"));
+	    updateQuantityInDatabase(userId, productId, currentQuantity);
+	  }
+	
+	  function decreaseQuantity() {
+	    const row = document.querySelector('#cartTable tbody tr');
+	    const quantityElement = row.querySelector('.quantity');
+	    let currentQuantity = parseInt(quantityElement.textContent);
+	    if (currentQuantity > 1) {
+	      currentQuantity -= 1;
+	      quantityElement.textContent = currentQuantity;
+	    }
+	    updateTotal();
+	    let productId = parseInt(row.cells[0].getAttribute("data-product-id"));
+	    updateQuantityInDatabase(userId, productId, currentQuantity);
+	  }
+	
+	  function removeFromCart() {
+	    let row = document.querySelector('#cartTable tbody tr');
+	    let productId = parseInt(row.cells[0].getAttribute("data-product-id"));
+	    deleteItemFromDatabase(userId, productId);
+	    row.remove();
+	    updateTotal();
+	  }
+	
+	  // Update cart total based on item quantity
+	  function updateTotal() {
+	    const quantity = parseInt(document.querySelector('.quantity').textContent);
+	    const price = 10; // Replace this with the actual price of the product
+	    const total = price * quantity;
+	    document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+	  }
+	
+	  // Redirect to the payment page
+	  function redirectToPayment() {
+	    window.location.href = "http://localhost:8080/buy?";
+	  }
+	
+	  // Update the total when the page loads
+	  document.addEventListener('DOMContentLoaded', updateTotal);
+	
+	  // Add click event listener to the checkout button
+	  const checkoutButton = document.getElementById('checkoutBtn');
+	  checkoutButton.addEventListener('click', redirectToPayment);
+	</script>
+	
+
 </body>
 
 </html>
