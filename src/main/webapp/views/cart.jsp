@@ -1,11 +1,14 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.*" %>
-<% 
-response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-response.setDateHeader("Expires", 0); // Proxies.
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%
+    String username = (String) session.getAttribute("username");
+    int userid = (int) session.getAttribute("userid");
 %>
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -117,7 +120,7 @@ response.setDateHeader("Expires", 0); // Proxies.
             </thead>
             <tbody>
                 <%
-                int userId = 1; // Replace this with the actual user ID of the logged-in user
+                int userId = userid; // Replace this with the actual user ID of
                 try {
                     String url = "jdbc:mysql://localhost:3306/springproject";
                     Class.forName("com.mysql.cj.jdbc.Driver");
@@ -168,7 +171,7 @@ response.setDateHeader("Expires", 0); // Proxies.
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<script>
-	  let userId = 1; // Replace this with the actual user ID of the logged-in user
+	let userId = <%= userid %>; // Replace this with the actual user ID of the logged-in user
 	
 	  function updateQuantityInDatabase(userId, productId, quantity) {
 	    $.post("/updateCartItem", { userId: userId, productId: productId, quantity: quantity })
