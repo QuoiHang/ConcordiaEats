@@ -1,6 +1,9 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -9,8 +12,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
 	<style>
         body {
@@ -79,7 +83,7 @@
                         <a class="nav-link" th:href="@{/uproduct}" href="/user/products">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/Search}" href="#">Search</a>
+                        <a class="nav-link active" th:href="@{/search}" href="#">Search</a>
                     </li>                         
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/favorites}" href="/favorites">Favorites</a>
@@ -102,7 +106,7 @@
     <!-- SEARCH BAR -->
     <div class="container">
 		<div class="input-group my-3 d-flex align-items-center">
-			<form method="get" class="d-flex flex-grow-1">
+			<form method="post" class="d-flex flex-grow-1" action="/searchKeyword">
 		    	<div class="flex-grow-1 mr-2">
 		      		<input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Enter a product name to search">
 		    	</div>
@@ -115,69 +119,84 @@
 		<table id="resultTable" class="table">
 			<thead>
 				<tr>
-					<th>Serial No.</th>
-					<th>Product Name</th>
-					<th>Category</th>
-					<th>Preview</th>
-					<th>Quantity</th>
-					<th>Price</th>
-					<th>Weight</th>
-					<th>Description</th>
-					<th>Buy</th>	
+					<th scope="col">Serial No.</th>
+					<th scope="col">Product Name</th>
+					<th scope="col">Category</th>
+					<th scope="col">Preview</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Price</th>
+					<th scope="col">Weight</th>
+					<th scope="col">Description</th>
+					<!-- Like -->
+					<th scope="col"></th>
+					<!-- Add to cart -->
+					<th scope="col"></th>		
 				</tr>
 			</thead>	
 			<tbody>
-				<%
-				if(request.getParameter("keyword")!=null) {
-					String keyword=request.getParameter("keyword");
-					String url = "jdbc:mysql://localhost:3306/springproject";
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection(url, "root", "");
-					Statement stmt = con.createStatement();
-					Statement stmt2 = con.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name LIKE '%" + keyword + "%' order by name ASC, categoryid ASC, sold DESC");
-					
-					while (rs.next()) {
-						int id = rs.getInt("id");
-						String name = rs.getString("name");
-						int categoryid = rs.getInt("categoryid");
-						int quantity = rs.getInt("quantity");
-						int price = rs.getInt("price");
-						String weight = rs.getString("weight");
-						String description = rs.getString("description");
-	
-						ResultSet rs2 = stmt2.executeQuery("SELECT name FROM categories WHERE categoryid=" + categoryid);
-						rs2.next();
-						String categoryName = rs2.getString("name");
-				%>
-				<tr>
-					<td><%= id %></td>
-					<td><%= name %></td>
-					<td><%= categoryName %></td>
-					<td><img src='https://placehold.co/100x100.png' height='100px' width='100px'></td>
-					<td><%= quantity %></td>
-					<td>$ <%= price %></td>
-					<td><%= weight %> g</td>
-					<td><%= description %></td>
-					<td>
-						<form action="/buy" method="get">
-							<input type="hidden" name="id" value="<%= id %>">
-							<input type="submit" value="Buy" class="btn btn-info btn-lg">
-						</form>
-					</td>
-				</tr>
-				<%
-					}
-				}
-				%>
+				<tbody>
+				<c:forEach items="${productList}" var="product">
+					<tr>
+						<td>${product.id}</td>
+						<td>${product.name}</td>
+						<td>${product.categoryName}</td>
+						<td><img src="${product.image}" height="100px" width="100px"></td>
+						<td>${product.quantity}</td>
+						<td>$ ${product.onSale ? product.discountedPrice : product.price}</td>
+						<td>${product.weight} g</td>
+						<td>${product.description}</td>
+						
+						<td>
+							<form class="like-form" method="post" action="/like">
+							    <input type="hidden" name="productId" value="${product.id}" />
+							    <button type="submit" class="like-button btn" style="color: #912338; background: none; border: none;">
+							        <i class="${product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i>
+							    </button>
+							</form>			    						
+						</td>
+						
+						<td>
+							<form action="/add" method="post">
+								<input type="hidden" name="id" value="${product.id}">
+								<input type="submit" value="Add to Cart" class="btn btn-info btn-lg">
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>	
     </div>
     <!-- SEARCH BAR -->
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+		    $(".like-form").submit(function(event) {
+		        event.preventDefault(); // prevent the form from submitting normally
+		        var formData = $(this).serialize(); // get the form data
+		        var $likeButton = $(this).find(".like-button"); // get the like button that was clicked
+		        $.ajax({
+		            url: "/like",
+		            type: "POST",
+		            data: formData,
+		            dataType: "json",
+		            success: function(response) {
+		                // Update the like button based on the response
+		                if (response.liked) {
+		                    $likeButton.find("i").removeClass("far").addClass("fas"); // select the i element inside the like button that was clicked
+		                } else {
+		                    $likeButton.find("i").removeClass("fas").addClass("far"); // select the i element inside the like button that was clicked
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error:", error);
+		            }
+		        });
+		    });
+		});
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
 </body>
 
 </html>

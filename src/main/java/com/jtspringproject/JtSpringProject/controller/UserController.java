@@ -47,23 +47,36 @@ public class UserController {
 	}
 
 	private List<Product> getUserProducts(String userid, String mode) throws Exception {
+		return getUserProducts(userid, mode, "");
+	}
+	
+	private List<Product> getUserProducts(String userid, String mode, String keyword) throws Exception {
 		List<Product> productList = new ArrayList<>();
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
 		
-		PreparedStatement stmt;
-		if (mode == "all") {
-			stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products;");
-		} else {
-			stmt = con.prepareStatement("SELECT *, 1 AS liked FROM products WHERE products.id IN (SELECT favorites.product_id FROM favorites WHERE favorites.user_id = ?);");
+		PreparedStatement stmt = null;
+		Statement stmt2 = con.createStatement();
+		
+		switch(mode) {
+			case "all":
+				stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products;");		
+				stmt.setString(1, userid);
+				break;
+			case "favorites":
+				stmt = con.prepareStatement("SELECT *, 1 AS liked FROM products WHERE products.id IN (SELECT favorites.product_id FROM favorites WHERE favorites.user_id = ?);");
+				stmt.setString(1, userid);
+				break;
+			case "search":
+				stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products WHERE products.name LIKE ?;");
+				stmt.setString(1, userid);
+				stmt.setString(2, "%" + keyword + "%");
+				break;
 		}
 		
-		stmt.setString(1, userid);
 		ResultSet rs = stmt.executeQuery();
 		
-		Statement stmt2 = con.createStatement();
-
 		while (rs.next()) {
 			int id = rs.getInt("id");
 			String name = rs.getString("name");
@@ -108,12 +121,28 @@ public class UserController {
 
 	
 	@GetMapping("/search")
-	public String search(Model model, HttpSession session) {
+	public String search(Model model, HttpSession session) throws Exception {
 	    String username = (String) session.getAttribute("username");
 	    Integer useridObj = (Integer) session.getAttribute("userid");
 	    String userid = useridObj.toString();
 	    model.addAttribute("username", username);
 	    model.addAttribute("userid", userid);
+	    
+	    model.addAttribute("productList", null);
+	    
+		return "search";
+	}
+	
+	@PostMapping("/searchKeyword")
+	public String searchKeywords(@RequestParam("keyword") String keyword, Model model, HttpSession session) throws Exception {
+	    String username = (String) session.getAttribute("username");
+	    Integer useridObj = (Integer) session.getAttribute("userid");
+	    String userid = useridObj.toString();
+	    model.addAttribute("username", username);
+	    model.addAttribute("userid", userid);
+	    
+	    List<Product> productList = getUserProducts(userid, "search", keyword);
+		model.addAttribute("productList", productList);
 	    
 		return "search";
 	}
