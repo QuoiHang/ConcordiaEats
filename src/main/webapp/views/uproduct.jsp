@@ -140,33 +140,7 @@
 							    <button type="submit" class="like-button btn" style="color: #912338; background: none; border: none;">
 							        <i class="${product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i>
 							    </button>
-							</form>
-							
-						<script>
-						    $(document).ready(function() {
-						        $(".like-form").submit(function(event) {
-						            event.preventDefault(); // prevent the form from submitting normally
-						            var formData = $(this).serialize(); // get the form data
-						            $.ajax({
-						                url: "/like",
-						                type: "POST",
-						                data: formData,
-						                dataType: "json",
-						                success: function(response) {
-						                    // Update the like button based on the response
-						                    if (response.liked) {
-						                        $(".like-button i").removeClass("far").addClass("fas");
-						                    } else {
-						                        $(".like-button i").removeClass("fas").addClass("far");
-						                    }
-						                },
-						                error: function(xhr, status, error) {
-						                    console.error("Error:", error);
-						                }
-						            });
-						        });
-						    });
-						</script>					    						
+							</form>			    						
 						</td>
 						
 						<td>
@@ -181,7 +155,33 @@
 		</table>
 	</div>
 	<!-- CATAGORIES -->
-
+	
+	<script>
+		$(document).ready(function() {
+		    $(".like-form").submit(function(event) {
+		        event.preventDefault(); // prevent the form from submitting normally
+		        var formData = $(this).serialize(); // get the form data
+		        var $likeButton = $(this).find(".like-button"); // get the like button that was clicked
+		        $.ajax({
+		            url: "/like",
+		            type: "POST",
+		            data: formData,
+		            dataType: "json",
+		            success: function(response) {
+		                // Update the like button based on the response
+		                if (response.liked) {
+		                    $likeButton.find("i").removeClass("far").addClass("fas"); // select the i element inside the like button that was clicked
+		                } else {
+		                    $likeButton.find("i").removeClass("fas").addClass("far"); // select the i element inside the like button that was clicked
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error:", error);
+		            }
+		        });
+		    });
+		});
+	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
