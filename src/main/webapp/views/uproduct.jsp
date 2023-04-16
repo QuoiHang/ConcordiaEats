@@ -128,8 +128,8 @@
 					<tr>
 						<td>${product.id}</td>
 						<td>${product.name}</td>
-						<td><img src="${product.image}" height="100px" width="100px"></td>
 						<td>${product.categoryName}</td>
+						<td><img src="${product.image}" height="100px" width="100px"></td>
 						<td>${product.quantity}</td>
 						<td>$ ${product.onSale ? product.discountedPrice : product.price}</td>
 						<td>${product.weight} g</td>
