@@ -10,6 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 @Controller
 public class UserController {
 
@@ -76,4 +81,44 @@ public class UserController {
 	public String cart() {
 		return "cart";
 	}
+	
+	 @PostMapping("/updateCartItem")
+	    public ResponseEntity<?> updateCartItem(@RequestParam("userId") int userId,
+	                                            @RequestParam("productId") int productId,
+	                                            @RequestParam("quantity") int quantity) {
+	        try {
+	            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	            PreparedStatement pst = con.prepareStatement("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?;");
+	            pst.setInt(1, quantity);
+	            pst.setInt(2, userId);
+	            pst.setInt(3, productId);
+
+	            int i = pst.executeUpdate();
+	            System.out.println("Cart item updated: " + i);
+
+	            return ResponseEntity.ok().build();
+	        } catch (Exception e) {
+	            System.out.println("Exception: " + e);
+	            return ResponseEntity.badRequest().build();
+	        }
+	    }
+
+	    @PostMapping("/deleteCartItem")
+	    public ResponseEntity<?> deleteCartItem(@RequestParam("userId") int userId,
+	                                            @RequestParam("productId") int productId) {
+	        try {
+	            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	            PreparedStatement pst = con.prepareStatement("DELETE FROM cart WHERE user_id = ? AND product_id = ?;");
+	            pst.setInt(1, userId);
+	            pst.setInt(2, productId);
+
+	            int i = pst.executeUpdate();
+	            System.out.println("Cart item deleted: " + i);
+
+	            return ResponseEntity.ok().build();
+	        } catch (Exception e) {
+	            System.out.println("Exception: " + e);
+	            return ResponseEntity.badRequest().build();
+	        }
+	    }
 }
