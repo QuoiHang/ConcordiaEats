@@ -13,8 +13,8 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></script>
 	<style>
         body {
@@ -135,25 +135,38 @@
 						<td>${product.description}</td>
 						
 						<td>
-							<form action="/unlike" method="post">
-								<input type="hidden" name="productId" value="${product.id}" />
-								<!--  <input type="hidden" name="likeAction" value="${ product.liked > 0 ? 'unlike' : 'like'}" />-->
-								<button type="submit" class="btn" style="color: #912338; background: none; border: none;"><i id="likeButton${product.id}" class="${ product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i></button>
+							<form class="like-form" method="post" action="/like">
+							    <input type="hidden" name="productId" value="${product.id}" />
+							    <button type="submit" class="like-button btn" style="color: #912338; background: none; border: none;">
+							        <i class="${product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i>
+							    </button>
 							</form>
 							
-							<script>
-						        var likeButton${product.id} = document.getElementById("likeButton${product.id}");
-						        likeButton${product.id}.addEventListener("click", function() {
-						            var isLiked = likeButton${product.id}.classList.contains("fas");
-						            if (isLiked) {
-						            	likeButton${product.id}.classList.remove("fas");
-						                likeButton${product.id}.classList.add("far");
-						            } else {
-						                likeButton${product.id}.classList.remove("far");
-						                likeButton${product.id}.classList.add("fas");
-						            }
+						<script>
+						    $(document).ready(function() {
+						        $(".like-form").submit(function(event) {
+						            event.preventDefault(); // prevent the form from submitting normally
+						            var formData = $(this).serialize(); // get the form data
+						            $.ajax({
+						                url: "/like",
+						                type: "POST",
+						                data: formData,
+						                dataType: "json",
+						                success: function(response) {
+						                    // Update the like button based on the response
+						                    if (response.liked) {
+						                        $(".like-button i").removeClass("far").addClass("fas");
+						                    } else {
+						                        $(".like-button i").removeClass("fas").addClass("far");
+						                    }
+						                },
+						                error: function(xhr, status, error) {
+						                    console.error("Error:", error);
+						                }
+						            });
 						        });
-						    </script>					    						
+						    });
+						</script>					    						
 						</td>
 						
 						<td>
@@ -169,8 +182,8 @@
 	</div>
 	<!-- CATAGORIES -->
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 

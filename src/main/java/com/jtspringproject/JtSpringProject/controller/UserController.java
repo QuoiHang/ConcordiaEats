@@ -2,7 +2,9 @@ package com.jtspringproject.JtSpringProject.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -143,55 +145,39 @@ public class UserController {
 	}
 	
 	@PostMapping("/like")
-	public String like(@RequestParam("productId") int productId, HttpServletResponse response, HttpSession session) {
+	@ResponseBody
+	public Map<String, Object> likeProduct(@RequestParam("productId") int productId, HttpSession session) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+	        PreparedStatement pst;
+	        int liked = 0;
 
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-				PreparedStatement pst = con
-						.prepareStatement("INSERT INTO favorites (user_id, product_id) VALUES (?, ?)");
-				pst.setInt(1, (int) session.getAttribute("userid"));
-				pst.setInt(2, productId);
-				int i = pst.executeUpdate();
-				
-				if (i > 0) {
-					response.setStatus(HttpServletResponse.SC_OK);
-					return "redirect:/user/products"; 
-				} else {
-					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-					return null;
-				}
-			} catch (Exception e) {
-				System.out.println("Exception: " + e);
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				return null;
-			}
-	}
-	
-	@PostMapping("/unlike")
-	public String unlike(@RequestParam("productId") int productId, HttpServletResponse response, HttpSession session) {
+	        // Check if the user has already liked the product
+	        pst = con.prepareStatement("SELECT * FROM favorites WHERE user_id = ? AND product_id = ?");
+	        pst.setInt(1, (int) session.getAttribute("userid"));
+	        pst.setInt(2, productId);
+	        ResultSet rs = pst.executeQuery();
+	        if (rs.next()) {
+	            // The user has already liked the product, so unlike it
+	            pst = con.prepareStatement("DELETE FROM favorites WHERE user_id = ? AND product_id = ?");
+	            pst.setInt(1, (int) session.getAttribute("userid"));
+	            pst.setInt(2, productId);
+	            pst.executeUpdate();
+	        } else {
+	            // The user has not liked the product, so like it
+	            pst = con.prepareStatement("INSERT INTO favorites (user_id, product_id) VALUES (?, ?)");
+	            pst.setInt(1, (int) session.getAttribute("userid"));
+	            pst.setInt(2, productId);
+	            pst.executeUpdate();
+	            liked = 1;
+	        }
 
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-				PreparedStatement pst = con
-						.prepareStatement("DELETE FROM favorites WHERE user_id = ? AND product_id = ?");
-				pst.setInt(1, (int) session.getAttribute("userid"));
-				pst.setInt(2, productId);
-				int i = pst.executeUpdate();
-				
-				if (i > 0) {
-					response.setStatus(HttpServletResponse.SC_OK);
-					return "redirect:/user/products";
-				} else {
-					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-					return null;
-				}
-			} catch (Exception e) {
-				System.out.println("Exception: " + e);
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				return null;
-			}
+	        return Collections.singletonMap("liked", liked);
+	    } catch (Exception e) {
+	        System.out.println("Exception: " + e);
+	        return Collections.singletonMap("liked", 0);
+	    }
 	}
 	
 	@PostMapping("/add")
