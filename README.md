@@ -1,6 +1,9 @@
 # ConcordiaEats
 
-*Updated: 2023-4-12*
+*Updated: 2023-4-16*
+
+Formatted MVC is on the repo of Mengyang.
+Merging into formatted version is underway.
 
 ## branch-1 is available to work on. Feel free to branch from branch-1.
 
