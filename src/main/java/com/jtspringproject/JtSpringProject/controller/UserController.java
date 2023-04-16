@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 
 @Controller
 public class UserController {
@@ -192,10 +195,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/add")
-	public String add(@RequestParam("pid") int id, Model model) {
-		return "add";
+	public String add(@RequestParam("productId") int id, Model model) {
+	    return "add";
 	}
-	
+		
 	@PostMapping("/updateCartItem")
     public ResponseEntity<?> updateCartItem(@RequestParam("userId") int userId,
                                             @RequestParam("productId") int productId,
@@ -237,10 +240,10 @@ public class UserController {
     }
     
     @PostMapping("/addToCart")
-    public String addToCart(@RequestParam("productId") int productId, 
-                             @RequestParam("quantity") int quantity, 
-                             HttpSession session,
-                             HttpServletResponse response) {
+    public ResponseEntity<Map<String, Integer>> addToCart(@RequestParam("productId") int productId, 
+                                 @RequestParam("quantity") int quantity, 
+                                 HttpSession session) {
+    
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
@@ -269,13 +272,13 @@ public class UserController {
                 added = 1;
             }
 
-            response.sendRedirect("/cart");
-            return null;
+            return ResponseEntity.ok(Collections.singletonMap("added", added));
         } catch (Exception e) {
             System.out.println("Exception: " + e);
-            return "error";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("added", 0));
         }
     }
+
 
 
 }
