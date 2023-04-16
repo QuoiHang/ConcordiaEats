@@ -46,12 +46,19 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	private List<Product> getUserProducts(String userid) throws Exception {
+	private List<Product> getUserProducts(String userid, String mode) throws Exception {
 		List<Product> productList = new ArrayList<>();
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-		PreparedStatement stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products");
+		
+		PreparedStatement stmt;
+		if (mode == "all") {
+			stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products;");
+		} else {
+			stmt = con.prepareStatement("SELECT *, 1 AS liked FROM products WHERE products.id IN (SELECT favorites.product_id FROM favorites WHERE favorites.user_id = ?);");
+		}
+		
 		stmt.setString(1, userid);
 		ResultSet rs = stmt.executeQuery();
 		
@@ -93,7 +100,7 @@ public class UserController {
 	    model.addAttribute("username", username);
 	    model.addAttribute("userid", userid);
 	    
-	    List<Product> productList = getUserProducts(userid);
+	    List<Product> productList = getUserProducts(userid, "all");
 		model.addAttribute("productList", productList);
 	    
 	    return "uproduct";
@@ -123,12 +130,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/favorites")
-	public String favorites(Model model, HttpSession session) {
+	public String favorites(Model model, HttpSession session) throws Exception {
 	    String username = (String) session.getAttribute("username");
 	    Integer useridObj = (Integer) session.getAttribute("userid");
 	    String userid = useridObj.toString();
 	    model.addAttribute("username", username);
-	    model.addAttribute("userid", userid);		
+	    model.addAttribute("userid", userid);	
+	    
+	    List<Product> productList = getUserProducts(userid, "favorites");
+		model.addAttribute("productList", productList);
 	    
 		return "favorites";
 	}

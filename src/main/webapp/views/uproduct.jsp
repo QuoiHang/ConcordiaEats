@@ -122,6 +122,7 @@
 				<!-- Add to cart -->
 				<th scope="col"></th>	
 			</tr>
+			
 			<tbody>
 				<c:forEach items="${productList}" var="product">
 					<tr>
