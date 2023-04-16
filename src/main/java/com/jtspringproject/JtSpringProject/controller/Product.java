@@ -14,6 +14,7 @@ public class Product {
     private double discountedPrice;
     private double discount;
     private int sold;
+    private int liked;
 
     public Product(int id, String name, String image, int categoryId, String categoryName, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice, int sold) {
         this.id = id;
@@ -29,6 +30,13 @@ public class Product {
         this.discountedPrice = discountedPrice;
         this.sold = sold;
     }
+    
+    public Product(int id, String name, String image, int categoryId, String categoryName, int quantity, int price, int weight, String description, boolean onSale, double discountedPrice, int sold, int liked) {
+        this(id, name, image, categoryId, categoryName, quantity, price, weight, description, onSale, discountedPrice, sold);
+        this.liked = liked;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -131,5 +139,13 @@ public class Product {
     
     public void setSold(int num) {
         this.sold = this.sold + num;
+    }
+    
+    public int getLiked() {
+        return liked;
+    }
+    
+    public void setLiked(int num) {
+        this.liked = num;
     }
 }

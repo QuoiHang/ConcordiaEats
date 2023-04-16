@@ -135,10 +135,10 @@
 						<td>${product.description}</td>
 						
 						<td>
-						
 							<form action="/like" method="post">
 								<input type="hidden" name="productId" value="${product.id}" />
-								<button type="submit" class="btn" style="color: #912338; background: none; border: none;"><i id="likeButton${product.id}" class="far fa-heart fa-lg"></i></button>
+								<!--  <input type="hidden" name="likeAction" value="${ product.liked > 0 ? 'unlike' : 'like'}" />-->
+								<button type="submit" class="btn" style="color: #912338; background: none; border: none;"><i id="likeButton${product.id}" class="${ product.liked > 0 ? 'fas' : 'far'} fa-heart fa-lg"></i></button>
 							</form>
 							
 							<script>
@@ -146,11 +146,14 @@
 						        likeButton${product.id}.addEventListener("click", function() {
 						            var isLiked = likeButton${product.id}.classList.contains("fas");
 						            if (isLiked) {
-						            	likeButton${product.id}.classList.remove("far");
+						            	likeButton${product.id}.classList.remove("fas");
+						                likeButton${product.id}.classList.add("far");
+						            } else {
+						                likeButton${product.id}.classList.remove("far");
 						                likeButton${product.id}.classList.add("fas");
 						            }
 						        });
-						    </script>							
+						    </script>					    						
 						</td>
 						
 						<td>

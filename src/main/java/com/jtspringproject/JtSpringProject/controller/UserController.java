@@ -44,15 +44,16 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	private List<Product> getAllProducts() throws Exception {
+	private List<Product> getUserProducts(String userid) throws Exception {
 		List<Product> productList = new ArrayList<>();
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-		Statement stmt = con.createStatement();
+		PreparedStatement stmt = con.prepareStatement("SELECT *, (SELECT COUNT(*) FROM favorites WHERE favorites.product_id = products.id AND favorites.user_id = ?) AS liked FROM products");
+		stmt.setString(1, userid);
+		ResultSet rs = stmt.executeQuery();
+		
 		Statement stmt2 = con.createStatement();
-		String query = "select * from products ORDER BY categoryid ASC, name ASC, sold ASC;";
-		ResultSet rs = stmt.executeQuery(query);
 
 		while (rs.next()) {
 			int id = rs.getInt("id");
@@ -71,12 +72,14 @@ public class UserController {
 			boolean onSale = rs.getBoolean("onSale");
 			double discountedPrice = rs.getDouble("discountedPrice");
 			int sold = rs.getInt("sold");
+			int liked = rs.getInt("liked");
 			
 			Product product = new Product(id, name, image, categoryId, categoryName, quantity, price, weight, description, onSale,
-					discountedPrice, sold);
+					discountedPrice, sold, liked);
 			productList.add(product);
 		}
 
+		// System.out.println("Product list size: " + productList.size());
 		return productList;
 	}
 	
@@ -88,7 +91,7 @@ public class UserController {
 	    model.addAttribute("username", username);
 	    model.addAttribute("userid", userid);
 	    
-	    List<Product> productList = getAllProducts();
+	    List<Product> productList = getUserProducts(userid);
 		model.addAttribute("productList", productList);
 	    
 	    return "uproduct";
@@ -142,48 +145,53 @@ public class UserController {
 	@PostMapping("/like")
 	public String like(@RequestParam("productId") int productId, HttpServletResponse response, HttpSession session) {
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-			PreparedStatement pst = con
-					.prepareStatement("INSERT INTO favorites (user_id, product_id) VALUES (?, ?)");
-			pst.setInt(1, (int) session.getAttribute("userid"));
-			pst.setInt(2, productId);
-			int i = pst.executeUpdate();
-			
-			if (i > 0) {
-				response.setStatus(HttpServletResponse.SC_OK);
-				return "redirect:/user/products"; 
-			} else {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+				PreparedStatement pst = con
+						.prepareStatement("INSERT INTO favorites (user_id, product_id) VALUES (?, ?)");
+				pst.setInt(1, (int) session.getAttribute("userid"));
+				pst.setInt(2, productId);
+				int i = pst.executeUpdate();
+				
+				if (i > 0) {
+					response.setStatus(HttpServletResponse.SC_OK);
+					return null; 
+				} else {
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					return null;
+				}
+			} catch (Exception e) {
+				System.out.println("Exception: " + e);
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				return null;
 			}
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return null;
-		}
 	}
-
+	
 	@PostMapping("/unlike")
-	public String unlike(@RequestParam("productId") int productId, HttpServletResponse response, Model model) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
-			PreparedStatement pst = con
-					.prepareStatement("UPDATE products SET onSale = 0, discountedPrice = price WHERE id = ?;");
-			pst.setInt(1, productId);
-			int i = pst.executeUpdate();
-			if (i > 0) {
-				response.setStatus(HttpServletResponse.SC_OK);
-				return "redirect:/favorites"; 
-			} else {;
+	public String unlike(@RequestParam("productId") int productId, HttpServletResponse response, HttpSession session) {
+
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+				PreparedStatement pst = con
+						.prepareStatement("DELETE FROM favorites WHERE user_id = ? AND product_id = ?");
+				pst.setInt(1, (int) session.getAttribute("userid"));
+				pst.setInt(2, productId);
+				int i = pst.executeUpdate();
+				
+				if (i > 0) {
+					response.setStatus(HttpServletResponse.SC_OK);
+					return null;
+				} else {
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					return null;
+				}
+			} catch (Exception e) {
+				System.out.println("Exception: " + e);
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				return null;
 			}
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-			return null; 
-		}
 	}
 	
 	@PostMapping("/add")
