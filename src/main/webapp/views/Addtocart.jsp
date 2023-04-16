@@ -135,7 +135,8 @@
 				                    <input type="number" class="form-control" name="quantity" min="1" value="1">
 				                    <input type="hidden" name="productId" value="${product.id}">
 				                    <div class="input-group-append">
-				                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+				                        <button type="submit" class="btn btn-primary add-to-cart-button">Add to Cart</button>
+
 				                    </div>
 				                </div>
 				            </form>
@@ -148,33 +149,42 @@
 	</div>
 	
 	<script>
-	<script>
-	    $(function() {
-	        $(".add-to-cart-form").submit(function(event) {
-	            event.preventDefault(); // prevent the form from submitting normally
-	
-	            var dataObject = {
-	                productId: $(this).find("input[name='productId']").val(),
-	                quantity: $(this).find("input[name='quantity']").val()
-	            };
-	
-	            $.ajax({
-	                url: "/addToCart",
-	                type: "POST",
-	                data: dataObject,
-	                dataType: "json",
-	                success: function(response) {
-	                    // You can update the UI based on the response, such as displaying a success message or updating the cart count
-	                    console.log("Product added to cart:", response);
-	                },
-	                error: function(xhr, status, error) {
-	                    console.error("Error:", error);
-	                }
-	            });
-	        });
-	    });
+		$(document).ready(function() {
+		    $(".add-to-cart-form").submit(function(event) {
+		        event.preventDefault(); // prevent the form from submitting normally
+		        var formData = $(this).serialize(); // get the form data
+		        var $addToCartButton = $(this).find("button[type='submit']"); // get the add to cart button that was clicked
+		        $.ajax({
+		            url: "/addToCart",
+		            type: "POST",
+		            data: formData,
+		            dataType: "json",
+		            success: function(response) {
+		                // Update the add to cart button based on the response
+		                if (response.added) {
+		                    $addToCartButton.text("Added to Cart"); // change the text on the add to cart button to indicate that the product has been added
+		                    $addToCartButton.prop("disabled", true); // disable the add to cart button to prevent adding the same product multiple times
+		                    // Update the cart total
+		                    $.ajax({
+		                        url: "/cart-total",
+		                        type: "GET",
+		                        dataType: "json",
+		                        success: function(response) {
+		                            $("#cart-total").text(response.total);
+		                        },
+		                        error: function(xhr, status, error) {
+		                            console.error("Error:", error);
+		                        }
+		                    });
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error:", error);
+		            }
+		        });
+		    });
+		});
 	</script>
-
 
 	
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.js"></script>
