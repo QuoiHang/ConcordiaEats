@@ -235,4 +235,47 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    @PostMapping("/addToCart")
+    public String addToCart(@RequestParam("productId") int productId, 
+                             @RequestParam("quantity") int quantity, 
+                             HttpSession session,
+                             HttpServletResponse response) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject", "root", "");
+            PreparedStatement pst;
+            int added = 0;
+
+            // Check if the user has already added the product to the cart
+            pst = con.prepareStatement("SELECT * FROM cart WHERE user_id = ? AND product_id = ?");
+            pst.setInt(1, (int) session.getAttribute("userid"));
+            pst.setInt(2, productId);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                // The user has already added the product to the cart, so update the quantity
+                pst = con.prepareStatement("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
+                pst.setInt(1, quantity + rs.getInt("quantity"));
+                pst.setInt(2, (int) session.getAttribute("userid"));
+                pst.setInt(3, productId);
+                pst.executeUpdate();
+            } else {
+                // The user has not added the product to the cart, so add it
+                pst = con.prepareStatement("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+                pst.setInt(1, (int) session.getAttribute("userid"));
+                pst.setInt(2, productId);
+                pst.setInt(3, quantity);
+                pst.executeUpdate();
+                added = 1;
+            }
+
+            response.sendRedirect("/cart");
+            return null;
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+            return "error";
+        }
+    }
+
+
 }
