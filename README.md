@@ -3,7 +3,7 @@
 *Updated: 2023-4-18*
 
 Formatted MVC is on the repo of Mengyang.
-Webapp is done one features and unit tests.
+Webapp is done with features and unit tests.
 
 ## This is the old repo and main branch is the basic version of development.
 ## The final version is on main branch in Menayang's repo.
