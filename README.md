@@ -5,8 +5,8 @@
 Formatted MVC is on the repo of Mengyang.
 Webapp is done with features and unit tests.
 
-## This is the old repo and main branch is the basic version of development.
-## The final version is on main branch in Menayang's repo.
+### This is the old repo and main branch is the basic version of development.
+### The final version is on main branch in [Menayang's repo](https://github.com/mengyangq). Kindly ask for access since the final project works on Cloud database instead of local server.
 
 ## Color Theme
 [Official Web Palette](https://www.concordia.ca/web/design/ui-kit-style-guide-accessibility/web-palette-new.html)
