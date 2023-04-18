@@ -6,6 +6,7 @@ Formatted MVC is on the repo of Mengyang.
 Webapp is done with features and unit tests.
 
 ### This is the old repo and main branch is the basic version of development.
+### This repo is still under an ambiguous MVC structure and suffers from its original unsystematic management, though the main functions work.
 ### The final version is on main branch in [Menayang's repo](https://github.com/mengyangq). Kindly ask for access since the final project works on Cloud database instead of local server.
 
 ## Color Theme
