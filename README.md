@@ -1,11 +1,12 @@
 # ConcordiaEats
 
-*Updated: 2023-4-16*
+*Updated: 2023-4-18*
 
 Formatted MVC is on the repo of Mengyang.
-Merging into formatted version is underway.
+Webapp is done one features and unit tests.
 
-## branch-1 is available to work on. Feel free to branch from branch-1.
+## This is the old repo and main branch is the basic version of development.
+## The final version is on main branch in Menayang's repo.
 
 ## Color Theme
 [Official Web Palette](https://www.concordia.ca/web/design/ui-kit-style-guide-accessibility/web-palette-new.html)
